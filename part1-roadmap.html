@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thai Language Roadmap</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #FAF8F4;
+    --cream2: #F4F1EB;
+    --white: #FFFFFF;
+    --gold: #B8976A;
+    --gold-light: #E8D9C0;
+    --text: #1D1D1F;
+    --text-secondary: #6E6E73;
+    --text-light: #A1A1A6;
+    --border: #E8E3DA;
+    --shadow: 0 4px 30px rgba(0,0,0,0.06);
+    --shadow-hover: 0 12px 50px rgba(0,0,0,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250, 248, 244, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav .logo {
+    font-size: 15px; font-weight: 600; letter-spacing: -0.3px;
+    color: var(--text);
+  }
+  nav .logo span { color: var(--gold); }
+  nav .nav-links { display: flex; gap: 32px; }
+  nav .nav-links a {
+    font-size: 13px; color: var(--text-secondary);
+    text-decoration: none; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    padding: 120px 40px 80px;
+    max-width: 900px; margin: 0 auto; text-align: center;
+  }
+  .hero .badge {
+    display: inline-block;
+    background: var(--gold-light); color: var(--gold);
+    font-size: 12px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 6px 16px;
+    border-radius: 100px; margin-bottom: 32px;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 72px);
+    font-weight: 700; letter-spacing: -2px; line-height: 1.05;
+    color: var(--text); margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p {
+    font-size: 19px; color: var(--text-secondary);
+    max-width: 560px; margin: 0 auto 48px; line-height: 1.7;
+  }
+  .hero-stats {
+    display: flex; justify-content: center; gap: 60px;
+    flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat .num {
+    font-size: 36px; font-weight: 700; letter-spacing: -1px;
+    color: var(--text); display: block;
+  }
+  .hero-stat .label {
+    font-size: 13px; color: var(--text-secondary); margin-top: 4px;
+  }
+
+  /* DIVIDER */
+  .divider {
+    width: 60px; height: 1px; background: var(--gold);
+    margin: 80px auto;
+    opacity: 0.4;
+  }
+
+  /* SECTION */
+  .section { max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+  .section-label {
+    font-size: 12px; font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(28px, 4vw, 44px); font-weight: 700;
+    letter-spacing: -1px; color: var(--text);
+    margin-bottom: 16px; line-height: 1.15;
+  }
+  .section-desc {
+    font-size: 17px; color: var(--text-secondary);
+    max-width: 600px; line-height: 1.7; margin-bottom: 48px;
+  }
+
+  /* PHASE CARDS */
+  .phases { display: flex; flex-direction: column; gap: 24px; }
+  .phase-card {
+    background: var(--white); border-radius: 20px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .phase-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .phase-header {
+    display: flex; align-items: center; gap: 20px;
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase-num {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: var(--gold-light); color: var(--gold);
+    font-size: 20px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .phase-header-text h3 {
+    font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+    color: var(--text); margin-bottom: 4px;
+  }
+  .phase-header-text p { font-size: 14px; color: var(--text-secondary); }
+  .phase-milestone {
+    margin: 0 32px 28px;
+    padding: 14px 18px;
+    background: var(--cream2); border-radius: 12px;
+    font-size: 14px; color: var(--text-secondary);
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .phase-milestone::before {
+    content: "✦"; color: var(--gold); font-size: 12px;
+    margin-top: 2px; flex-shrink: 0;
+  }
+  .phase-table { width: 100%; border-collapse: collapse; }
+  .phase-table th {
+    text-align: left; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--text-light); padding: 0 32px 12px;
+  }
+  .phase-table td {
+    padding: 14px 32px; font-size: 14px; color: var(--text);
+    border-top: 1px solid var(--border);
+  }
+  .phase-table td:first-child {
+    font-weight: 600; color: var(--gold);
+    white-space: nowrap; width: 90px;
+  }
+  .phase-table td:nth-child(2) { color: var(--text-secondary); }
+  .phase-table tr:last-child td { padding-bottom: 24px; }
+
+  /* TOOLS SECTION */
+  .tools-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .tool-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 16px; padding: 24px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .tool-card:hover {
+    box-shadow: var(--shadow-hover); transform: translateY(-2px);
+  }
+  .tool-card .tool-name {
+    font-size: 16px; font-weight: 700; color: var(--text);
+    margin-bottom: 6px;
+  }
+  .tool-card .tool-purpose {
+    font-size: 13px; color: var(--text-secondary); line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .tool-card .tool-cost {
+    display: inline-block;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.8px;
+    padding: 4px 10px; border-radius: 100px;
+    background: var(--gold-light); color: var(--gold);
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 60px 40px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--text-light);
+  }
+  footer a {
+    color: var(--gold); text-decoration: none;
+    font-weight: 500;
+  }
+  .footer-nav {
+    display: flex; justify-content: center; gap: 40px;
+    margin-bottom: 24px; flex-wrap: wrap;
+  }
+  .footer-nav a {
+    font-size: 14px; color: var(--text-secondary); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-nav a:hover { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 20px; }
+    nav .nav-links { display: none; }
+    .hero { padding: 80px 20px 60px; }
+    .section { padding: 0 20px 60px; }
+    .phase-header { padding: 20px; }
+    .phase-table td, .phase-table th { padding: 12px 20px; }
+    .phase-milestone { margin: 0 20px 20px; }
+    .hero-stats { gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🇹🇭 Thai&nbsp;<span>Language</span></div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="badge">Part 1 — The Roadmap</div>
+  <h1>Beginner to<br><em>Conversational</em><br>in 30 Weeks</h1>
+  <p>A professional tutor's fast-track system focused on real communication — not textbook theory.</p>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="num">30</span>
+      <div class="label">Weeks to fluency</div>
+    </div>
+    <div class="hero-stat">
+      <span class="num">4</span>
+      <div class="label">Learning phases</div>
+    </div>
+    <div class="hero-stat">
+      <span class="num">20–45</span>
+      <div class="label">Minutes per day</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PHASES -->
+<div class="section">
+  <div class="section-label">The Journey</div>
+  <div class="section-title">Four Phases to<br>Conversational Thai</div>
+  <p class="section-desc">Thai grammar is simpler than English — no verb conjugation, no plurals, no gender. The main challenges are tones and script. This roadmap skips theory and gets you speaking fast.</p>
+
+  <div class="phases">
+
+    <!-- Phase 1 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num">1</div>
+        <div class="phase-header-text">
+          <h3>Survival Thai</h3>
+          <p>Weeks 1–4 · Say who you are, ask questions, survive daily situations</p>
+        </div>
+      </div>
+      <table class="phase-table">
+        <tr>
+          <th>Week</th>
+          <th>Focus</th>
+          <th>What You Can Do</th>
+        </tr>
+        <tr>
+          <td>Week 1</td>
+          <td>Tones + phonetics, greetings, numbers 1–100</td>
+          <td>Greet anyone, count, say your name</td>
+        </tr>
+        <tr>
+          <td>Week 2</td>
+          <td>Yes/no questions, "I want / I like / I don't want"</td>
+          <td>Order food, buy things</td>
+        </tr>
+        <tr>
+          <td>Week 3</td>
+          <td>Location words, asking where things are</td>
+          <td>Navigate, ask for directions</td>
+        </tr>
+        <tr>
+          <td>Week 4</td>
+          <td>Time expressions, daily routine phrases</td>
+          <td>Describe your day</td>
+        </tr>
+      </table>
+      <div class="phase-milestone">Have a 2-minute introduction conversation entirely in Thai — without notes.</div>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num">2</div>
+        <div class="phase-header-text">
+          <h3>Core Communication</h3>
+          <p>Weeks 5–10 · Handle most everyday situations</p>
+        </div>
+      </div>
+      <table class="phase-table">
+        <tr>
+          <th>Week</th>
+          <th>Focus</th>
+          <th>What You Can Do</th>
+        </tr>
+        <tr>
+          <td>Week 5</td>
+          <td>Past / present / future time markers</td>
+          <td>Talk about what happened, what you'll do</td>
+        </tr>
+        <tr>
+          <td>Week 6</td>
+          <td>Feelings, opinions, adjectives</td>
+          <td>Express emotions and preferences</td>
+        </tr>
+        <tr>
+          <td>Week 7</td>
+          <td>Shopping and negotiating</td>
+          <td>Buy anything at a market</td>
+        </tr>
+        <tr>
+          <td>Week 8</td>
+          <td>Food and restaurant conversations</td>
+          <td>Order complex meals, ask about ingredients</td>
+        </tr>
+        <tr>
+          <td>Week 9</td>
+          <td>Transport — taxi, bus, BTS, songthaew</td>
+          <td>Get anywhere in Thailand</td>
+        </tr>
+        <tr>
+          <td>Week 10</td>
+          <td>Health and emergencies</td>
+          <td>Handle basic health situations</td>
+        </tr>
+      </table>
+      <div class="phase-milestone">Spend 30 minutes in a Thai market using only Thai.</div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num">3</div>
+        <div class="phase-header-text">
+          <h3>Conversational Fluency</h3>
+          <p>Weeks 11–20 · Hold real conversations, understand replies</p>
+        </div>
+      </div>
+      <table class="phase-table">
+        <tr>
+          <th>Weeks</th>
+          <th>Focus</th>
+          <th>What You Can Do</th>
+        </tr>
+        <tr>
+          <td>11–12</td>
+          <td>Fillers, softeners, particles (นะ, ครับ, เลย)</td>
+          <td>Sound natural, not robotic</td>
+        </tr>
+        <tr>
+          <td>13–14</td>
+          <td>Thai culture — polite speech, social topics</td>
+          <td>Navigate social situations gracefully</td>
+        </tr>
+        <tr>
+          <td>15–16</td>
+          <td>Storytelling — connecting sentences, past events</td>
+          <td>Tell stories, explain things</td>
+        </tr>
+        <tr>
+          <td>17–18</td>
+          <td>Work and daily life vocabulary</td>
+          <td>Discuss jobs, routines, lifestyle</td>
+        </tr>
+        <tr>
+          <td>19–20</td>
+          <td>Thai script — basic reading (menus, signs)</td>
+          <td>Read real-world Thai</td>
+        </tr>
+      </table>
+      <div class="phase-milestone">Have a 15-minute unscripted conversation with a native speaker.</div>
+    </div>
+
+    <!-- Phase 4 -->
+    <div class="phase-card">
+      <div class="phase-header">
+        <div class="phase-num">4</div>
+        <div class="phase-header-text">
+          <h3>Expansion</h3>
+          <p>Weeks 21–30 · Handle unexpected topics, understand fast speech</p>
+        </div>
+      </div>
+      <table class="phase-table">
+        <tr>
+          <th>Weeks</th>
+          <th>Focus</th>
+          <th>What You Can Do</th>
+        </tr>
+        <tr>
+          <td>21–23</td>
+          <td>Slang, informal speech, social media Thai</td>
+          <td>Talk like a real person, not a textbook</td>
+        </tr>
+        <tr>
+          <td>24–26</td>
+          <td>Thai TV, music, YouTube without subtitles</td>
+          <td>Comprehend native speed</td>
+        </tr>
+        <tr>
+          <td>27–30</td>
+          <td>Thai script reading and basic writing</td>
+          <td>Full literacy foundation</td>
+        </tr>
+      </table>
+      <div class="phase-milestone">Watch a Thai TV show and understand 70%+ without subtitles.</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TOOLS -->
+<div class="section">
+  <div class="section-label">Your Toolkit</div>
+  <div class="section-title">Essential Tools &amp;<br>Resources</div>
+  <p class="section-desc">The right tools make all the difference. These are the ones that actually work — tested and trusted by language learners worldwide.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-name">Anki</div>
+      <div class="tool-purpose">Spaced repetition flashcards. The single most powerful vocabulary tool ever built.</div>
+      <span class="tool-cost">Free</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">italki</div>
+      <div class="tool-purpose">Book sessions with native Thai tutors. Speaking practice is irreplaceable.</div>
+      <span class="tool-cost">Paid per lesson</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">ThaiPod101</div>
+      <div class="tool-purpose">Structured audio lessons from absolute beginner to advanced. Great podcast format.</div>
+      <span class="tool-cost">Free tier available</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Ling App</div>
+      <div class="tool-purpose">Gamified Thai learning with spaced repetition. Good for daily habit-building.</div>
+      <span class="tool-cost">Free tier available</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Google Translate</div>
+      <div class="tool-purpose">Use the camera mode for reading Thai text in the wild. Instant pronunciation.</div>
+      <span class="tool-cost">Free</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">Learn Thai from a White Guy</div>
+      <div class="tool-purpose">YouTube channel. The best free resource for mastering Thai tones. Start here.</div>
+      <span class="tool-cost">Free</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">NECTEC Thai Dictionary</div>
+      <div class="tool-purpose">The most comprehensive Thai-English dictionary available. Built by linguists.</div>
+      <span class="tool-cost">Free</span>
+    </div>
+    <div class="tool-card">
+      <div class="tool-name">HelloTalk / Tandem</div>
+      <div class="tool-purpose">Find Thai language exchange partners. Free speaking practice with real Thais.</div>
+      <span class="tool-cost">Free</span>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-nav">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+  <p>Thai Language Learning Guide · Designed for rapid conversational fluency</p>
+</footer>
+
+</body>
+</html>
