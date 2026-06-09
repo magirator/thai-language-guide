@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1000 Most-Used Thai Words</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --cream:#FAF8F4;--cream2:#F4F1EB;--white:#FFFFFF;
+    --gold:#B8976A;--gold-light:#E8D9C0;
+    --text:#1D1D1F;--text-secondary:#6E6E73;--text-light:#A1A1A6;
+    --border:#E8E3DA;
+    --shadow:0 4px 30px rgba(0,0,0,0.06);
+    --shadow-hover:0 12px 50px rgba(0,0,0,0.10);
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  nav .logo{font-size:15px;font-weight:600;}
+  nav .logo span{color:var(--gold);}
+  nav .nav-links{display:flex;gap:28px;}
+  nav .nav-links a{font-size:13px;color:var(--text-secondary);text-decoration:none;font-weight:500;transition:color 0.2s;}
+  nav .nav-links a:hover{color:var(--gold);}
+
+  .hero{padding:110px 40px 70px;max-width:900px;margin:0 auto;text-align:center;}
+  .badge{display:inline-block;background:var(--gold-light);color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:28px;}
+  .hero h1{font-size:clamp(38px,6vw,64px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:22px;}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero p{font-size:18px;color:var(--text-secondary);max-width:560px;margin:0 auto 44px;line-height:1.7;}
+  .hero-stats{display:flex;justify-content:center;gap:50px;flex-wrap:wrap;}
+  .hero-stat .num{font-size:34px;font-weight:700;letter-spacing:-1px;display:block;}
+  .hero-stat .label{font-size:13px;color:var(--text-secondary);margin-top:2px;}
+
+  .divider{width:60px;height:1px;background:var(--gold);margin:60px auto;opacity:0.4;}
+
+  /* SEARCH */
+  .search-wrap{max-width:960px;margin:0 auto;padding:0 40px 40px;}
+  .search-box{position:relative;}
+  .search-box input{
+    width:100%;padding:16px 20px 16px 50px;
+    font-size:16px;font-family:inherit;
+    background:var(--white);border:1px solid var(--border);border-radius:14px;
+    outline:none;color:var(--text);
+    box-shadow:var(--shadow);transition:border-color 0.2s,box-shadow 0.2s;
+  }
+  .search-box input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(184,151,106,0.12);}
+  .search-box input::placeholder{color:var(--text-light);}
+  .search-icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:18px;}
+  #result-count{margin-top:12px;font-size:13px;color:var(--text-secondary);padding-left:4px;}
+
+  /* CATEGORY TABS */
+  .cat-tabs{max-width:960px;margin:0 auto;padding:0 40px 32px;display:flex;gap:10px;flex-wrap:wrap;}
+  .cat-tab{
+    padding:8px 16px;border-radius:100px;font-size:13px;font-weight:500;
+    border:1px solid var(--border);background:var(--white);color:var(--text-secondary);
+    cursor:pointer;transition:all 0.2s;white-space:nowrap;
+  }
+  .cat-tab:hover{border-color:var(--gold);color:var(--gold);}
+  .cat-tab.active{background:var(--gold);border-color:var(--gold);color:var(--white);}
+
+  /* WORD SECTIONS */
+  .words-section{max-width:960px;margin:0 auto;padding:0 40px;}
+  .category-block{margin-bottom:40px;}
+  .cat-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;}
+  .cat-title{font-size:20px;font-weight:700;letter-spacing:-0.4px;}
+  .cat-count{font-size:13px;color:var(--text-secondary);background:var(--cream2);padding:3px 10px;border-radius:100px;}
+  .word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+  .word-card{
+    background:var(--white);border:1px solid var(--border);border-radius:14px;
+    padding:14px 16px;box-shadow:var(--shadow);
+    transition:box-shadow 0.2s,transform 0.2s;
+    cursor:default;
+  }
+  .word-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);}
+  .word-num{font-size:10px;color:var(--text-light);font-weight:600;margin-bottom:4px;}
+  .word-thai{font-size:18px;font-weight:700;color:var(--text);margin-bottom:2px;line-height:1.3;}
+  .word-phonetic{font-size:11px;color:var(--gold);margin-bottom:3px;font-style:italic;}
+  .word-english{font-size:12px;color:var(--text-secondary);}
+  .word-card.hidden{display:none;}
+
+  footer{text-align:center;padding:60px 40px;border-top:1px solid var(--border);font-size:13px;color:var(--text-light);margin-top:40px;}
+  .footer-nav{display:flex;justify-content:center;gap:40px;margin-bottom:20px;flex-wrap:wrap;}
+  .footer-nav a{font-size:14px;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;}
+  .footer-nav a:hover{color:var(--gold);}
+
+  @media(max-width:640px){
+    nav{padding:0 20px;} nav .nav-links{display:none;}
+    .hero{padding:80px 20px 50px;} .search-wrap,.cat-tabs,.words-section{padding-left:20px;padding-right:20px;}
+    .word-grid{grid-template-columns:repeat(2,1fr);}
+    .hero-stats{gap:28px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🇹🇭 Thai&nbsp;<span>Language</span></div>
+  <div class="nav-links">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">Part 4 — Vocabulary</div>
+  <h1>The <em>1000 Words</em><br>That Cover Everything</h1>
+  <p>Research shows knowing the 1000 most frequent words covers ~85% of everyday conversational Thai. Organized into 18 categories — search, filter, and study.</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><span class="num">1,000</span><div class="label">Essential words</div></div>
+    <div class="hero-stat"><span class="num">18</span><div class="label">Categories</div></div>
+    <div class="hero-stat"><span class="num">~85%</span><div class="label">Of daily conversation covered</div></div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="search-wrap">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="Search Thai, phonetic, or English..." oninput="filterWords()">
+  </div>
+  <div id="result-count"></div>
+</div>
+
+<div class="cat-tabs" id="catTabs">
+  <div class="cat-tab active" onclick="filterCat('all',this)">All 1000</div>
+  <div class="cat-tab" onclick="filterCat('pronouns',this)">Pronouns & People</div>
+  <div class="cat-tab" onclick="filterCat('verbs',this)">Verbs</div>
+  <div class="cat-tab" onclick="filterCat('adjectives',this)">Adjectives</div>
+  <div class="cat-tab" onclick="filterCat('questions',this)">Grammar & Particles</div>
+  <div class="cat-tab" onclick="filterCat('numbers',this)">Numbers & Time</div>
+  <div class="cat-tab" onclick="filterCat('places',this)">Places</div>
+  <div class="cat-tab" onclick="filterCat('food',this)">Food & Drink</div>
+  <div class="cat-tab" onclick="filterCat('transport',this)">Transport</div>
+  <div class="cat-tab" onclick="filterCat('health',this)">Health</div>
+  <div class="cat-tab" onclick="filterCat('shopping',this)">Shopping</div>
+  <div class="cat-tab" onclick="filterCat('work',this)">Work & Daily Life</div>
+  <div class="cat-tab" onclick="filterCat('social',this)">Social</div>
+  <div class="cat-tab" onclick="filterCat('connectors',this)">Connectors</div>
+  <div class="cat-tab" onclick="filterCat('nature',this)">Nature</div>
+  <div class="cat-tab" onclick="filterCat('education',this)">Education</div>
+  <div class="cat-tab" onclick="filterCat('body',this)">Body</div>
+  <div class="cat-tab" onclick="filterCat('entertainment',this)">Entertainment</div>
+  <div class="cat-tab" onclick="filterCat('fillers',this)">Fillers & Slang</div>
+</div>
+
+<div class="words-section" id="wordsSections"></div>
+
+<div class="divider"></div>
+<footer>
+  <div class="footer-nav">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+  <p>Thai Language Learning Guide · Designed for rapid conversational fluency</p>
+</footer>
+
+<script>
+const categories = [
+  {id:'pronouns', title:'Pronouns & People', words:[
+    {n:1,t:'ผม',p:'phom',e:'I (male, formal)'},{n:2,t:'ฉัน',p:'chan',e:'I (female / casual)'},{n:3,t:'เรา',p:'rao',e:'I / we (casual)'},{n:4,t:'คุณ',p:'khun',e:'you (polite)'},{n:5,t:'เขา',p:'khao',e:'he / she / they'},{n:6,t:'พวกเขา',p:'phuak khao',e:'they'},{n:7,t:'พวกเรา',p:'phuak rao',e:'we'},{n:8,t:'มัน',p:'man',e:'it'},{n:9,t:'ใคร',p:'khai',e:'who'},{n:10,t:'ตัวเอง',p:'tua eng',e:'oneself / self'},{n:11,t:'คนนี้',p:'khon ni',e:'this person'},{n:12,t:'คนนั้น',p:'khon nan',e:'that person'},{n:13,t:'ทุกคน',p:'thuk khon',e:'everyone'},{n:14,t:'บางคน',p:'bang khon',e:'someone'},{n:15,t:'ไม่มีใคร',p:'mai mi khai',e:'no one'},{n:16,t:'พ่อ',p:'pho',e:'father'},{n:17,t:'แม่',p:'mae',e:'mother'},{n:18,t:'ลูก',p:'luk',e:'child'},{n:19,t:'พี่',p:'phi',e:'older sibling'},{n:20,t:'น้อง',p:'nong',e:'younger sibling'},{n:21,t:'เพื่อน',p:'phuean',e:'friend'},{n:22,t:'แฟน',p:'faen',e:'partner / lover'},{n:23,t:'สามี',p:'sami',e:'husband'},{n:24,t:'ภรรยา',p:'phan raya',e:'wife'},{n:25,t:'ครอบครัว',p:'khrop khrua',e:'family'},{n:26,t:'คนไทย',p:'khon Thai',e:'Thai person'},{n:27,t:'ฝรั่ง',p:'farang',e:'foreigner (Western)'},{n:28,t:'เจ้าของ',p:'jao khong',e:'owner'},{n:29,t:'ลูกค้า',p:'luk kha',e:'customer'},{n:30,t:'เพื่อนบ้าน',p:'phuean ban',e:'neighbor'}
+  ]},
+  {id:'verbs', title:'Core Verbs', words:[
+    {n:31,t:'เป็น',p:'pen',e:'to be'},{n:32,t:'มี',p:'mi',e:'to have / there is'},{n:33,t:'ไป',p:'pai',e:'to go'},{n:34,t:'มา',p:'ma',e:'to come'},{n:35,t:'กิน',p:'gin',e:'to eat'},{n:36,t:'ดื่ม',p:'duem',e:'to drink'},{n:37,t:'พูด',p:'phut',e:'to speak'},{n:38,t:'บอก',p:'bok',e:'to tell'},{n:39,t:'ถาม',p:'tham',e:'to ask'},{n:40,t:'ตอบ',p:'top',e:'to answer'},{n:41,t:'ฟัง',p:'fang',e:'to listen'},{n:42,t:'ดู',p:'du',e:'to watch / look'},{n:43,t:'อ่าน',p:'an',e:'to read'},{n:44,t:'เขียน',p:'khian',e:'to write'},{n:45,t:'รู้',p:'ru',e:'to know'},{n:46,t:'เข้าใจ',p:'khao jai',e:'to understand'},{n:47,t:'คิด',p:'khit',e:'to think'},{n:48,t:'รู้สึก',p:'ru suek',e:'to feel'},{n:49,t:'ต้องการ',p:'tong gan',e:'to want / need'},{n:50,t:'อยาก',p:'yak',e:'to want to'},{n:51,t:'ชอบ',p:'chop',e:'to like'},{n:52,t:'รัก',p:'rak',e:'to love'},{n:53,t:'เกลียด',p:'kliat',e:'to hate'},{n:54,t:'ซื้อ',p:'sue',e:'to buy'},{n:55,t:'ขาย',p:'khai',e:'to sell'},{n:56,t:'จ่าย',p:'jai',e:'to pay'},{n:57,t:'ให้',p:'hai',e:'to give'},{n:58,t:'เอา',p:'ao',e:'to take / want'},{n:59,t:'ใช้',p:'chai',e:'to use'},{n:60,t:'ทำ',p:'tham',e:'to do / make'},{n:61,t:'ช่วย',p:'chuay',e:'to help'},{n:62,t:'เปิด',p:'poet',e:'to open'},{n:63,t:'ปิด',p:'pit',e:'to close'},{n:64,t:'เริ่ม',p:'roem',e:'to start'},{n:65,t:'หยุด',p:'yut',e:'to stop'},{n:66,t:'รอ',p:'ro',e:'to wait'},{n:67,t:'หา',p:'ha',e:'to look for'},{n:68,t:'เจอ',p:'joe',e:'to meet / find'},{n:69,t:'นั่ง',p:'nang',e:'to sit'},{n:70,t:'ยืน',p:'yuen',e:'to stand'},{n:71,t:'นอน',p:'non',e:'to sleep / lie down'},{n:72,t:'เดิน',p:'doen',e:'to walk'},{n:73,t:'วิ่ง',p:'wing',e:'to run'},{n:74,t:'ขับ',p:'khap',e:'to drive'},{n:75,t:'กลับ',p:'klap',e:'to return'},{n:76,t:'อยู่',p:'yu',e:'to be (location) / live'},{n:77,t:'เรียน',p:'rian',e:'to study'},{n:78,t:'สอน',p:'son',e:'to teach'},{n:79,t:'ทำงาน',p:'tham ngan',e:'to work'},{n:80,t:'สั่ง',p:'sang',e:'to order'},{n:81,t:'จอง',p:'jong',e:'to book / reserve'},{n:82,t:'โทร',p:'tho',e:'to call (phone)'},{n:83,t:'ส่ง',p:'song',e:'to send'},{n:84,t:'เปลี่ยน',p:'plian',e:'to change'},{n:85,t:'พัก',p:'phak',e:'to rest'},{n:86,t:'เล่น',p:'len',e:'to play'},{n:87,t:'ลืม',p:'luem',e:'to forget'},{n:88,t:'จำ',p:'jam',e:'to remember'},{n:89,t:'ตื่น',p:'tuen',e:'to wake up'},{n:90,t:'กลัว',p:'klua',e:'to fear'},{n:91,t:'ดีใจ',p:'di jai',e:'to be happy'},{n:92,t:'เสียใจ',p:'sia jai',e:'to be sad'},{n:93,t:'โกรธ',p:'krot',e:'to be angry'},{n:94,t:'เจ็บ',p:'jep',e:'to hurt'},{n:95,t:'ป่วย',p:'puay',e:'to be ill'},{n:96,t:'เดินทาง',p:'doen thang',e:'to travel'},{n:97,t:'ขอ',p:'kho',e:'to ask for / request'},{n:98,t:'ลอง',p:'long',e:'to try'},{n:99,t:'เลือก',p:'lueak',e:'to choose'},{n:100,t:'ตัดสินใจ',p:'tat sin jai',e:'to decide'},{n:101,t:'เชื่อ',p:'chuea',e:'to believe'},{n:102,t:'ต้อง',p:'tong',e:'must / have to'},{n:103,t:'ควร',p:'khuan',e:'should'},{n:104,t:'ถึง',p:'thueng',e:'to arrive / reach'},{n:105,t:'ข้าม',p:'kham',e:'to cross'},{n:106,t:'ออก',p:'ok',e:'to exit / leave'},{n:107,t:'เข้า',p:'khao',e:'to enter'},{n:108,t:'ขึ้น',p:'khuen',e:'to go up / get on'},{n:109,t:'ลง',p:'long',e:'to go down / get off'},{n:110,t:'ผ่าน',p:'phan',e:'to pass through'},{n:111,t:'แนะนำ',p:'nae nam',e:'to recommend'},{n:112,t:'อธิบาย',p:'athibai',e:'to explain'},{n:113,t:'แปล',p:'plae',e:'to translate'},{n:114,t:'ยืนยัน',p:'yuen yan',e:'to confirm'},{n:115,t:'ยกเลิก',p:'yok loek',e:'to cancel'},{n:116,t:'จัดการ',p:'jat kan',e:'to manage'},{n:117,t:'ถ่ายรูป',p:'thai rup',e:'to take a photo'},{n:118,t:'ฝึก',p:'fuek',e:'to practice'},{n:119,t:'ท่องจำ',p:'thong jam',e:'to memorize'},{n:120,t:'เริ่มใหม่',p:'roem mai',e:'to start over'}
+  ]},
+  {id:'adjectives', title:'Adjectives & Descriptors', words:[
+    {n:121,t:'ดี',p:'di',e:'good'},{n:122,t:'แย่',p:'yae',e:'bad / terrible'},{n:123,t:'สวย',p:'suay',e:'beautiful'},{n:124,t:'หล่อ',p:'lo',e:'handsome'},{n:125,t:'ใหม่',p:'mai',e:'new'},{n:126,t:'เก่า',p:'kao',e:'old'},{n:127,t:'ใหญ่',p:'yai',e:'big'},{n:128,t:'เล็ก',p:'lek',e:'small'},{n:129,t:'ยาว',p:'yao',e:'long'},{n:130,t:'สั้น',p:'san',e:'short'},{n:131,t:'สูง',p:'sung',e:'tall / high'},{n:132,t:'หนัก',p:'nak',e:'heavy'},{n:133,t:'เบา',p:'bao',e:'light (weight)'},{n:134,t:'เร็ว',p:'reo',e:'fast'},{n:135,t:'ช้า',p:'cha',e:'slow'},{n:136,t:'ร้อน',p:'ron',e:'hot'},{n:137,t:'เย็น',p:'yen',e:'cold'},{n:138,t:'อุ่น',p:'un',e:'warm'},{n:139,t:'หนาว',p:'nao',e:'cold (weather)'},{n:140,t:'เผ็ด',p:'phet',e:'spicy'},{n:141,t:'หวาน',p:'wan',e:'sweet'},{n:142,t:'เปรี้ยว',p:'priao',e:'sour'},{n:143,t:'เค็ม',p:'khem',e:'salty'},{n:144,t:'อร่อย',p:'aroi',e:'delicious'},{n:145,t:'สด',p:'sot',e:'fresh'},{n:146,t:'อ้วน',p:'uan',e:'fat'},{n:147,t:'ผอม',p:'phom',e:'thin'},{n:148,t:'แข็งแรง',p:'khaeng raeng',e:'strong'},{n:149,t:'เหนื่อย',p:'nueai',e:'tired'},{n:150,t:'สนุก',p:'sanuk',e:'fun'},{n:151,t:'น่ารัก',p:'na rak',e:'cute / adorable'},{n:152,t:'แปลก',p:'plaek',e:'strange'},{n:153,t:'ยาก',p:'yak',e:'difficult'},{n:154,t:'ง่าย',p:'ngai',e:'easy'},{n:155,t:'ถูก',p:'thuk',e:'cheap / correct'},{n:156,t:'แพง',p:'phaeng',e:'expensive'},{n:157,t:'เต็ม',p:'tem',e:'full'},{n:158,t:'ว่าง',p:'wang',e:'empty / available'},{n:159,t:'ยุ่ง',p:'yung',e:'busy'},{n:160,t:'สะอาด',p:'sa-at',e:'clean'},{n:161,t:'สกปรก',p:'sok kaprok',e:'dirty'},{n:162,t:'ปลอดภัย',p:'plot phai',e:'safe'},{n:163,t:'อันตราย',p:'antharai',e:'dangerous'},{n:164,t:'เสีย',p:'sia',e:'broken / spoiled'},{n:165,t:'ถูกต้อง',p:'thuk tong',e:'correct'},{n:166,t:'ผิด',p:'phit',e:'wrong'},{n:167,t:'จริง',p:'jing',e:'true / real'},{n:168,t:'เยอะ',p:'yoe',e:'a lot / many'},{n:169,t:'นิดหน่อย',p:'nit noi',e:'a little'},{n:170,t:'แน่นอน',p:'nae non',e:'certain / of course'},{n:171,t:'ฉลาด',p:'chalat',e:'smart'},{n:172,t:'ตลก',p:'talok',e:'funny'},{n:173,t:'เศร้า',p:'sao',e:'sad'},{n:174,t:'โกรธ',p:'krot',e:'angry'},{n:175,t:'กังวล',p:'kangwon',e:'worried'},{n:176,t:'ภูมิใจ',p:'phumi jai',e:'proud'},{n:177,t:'น่าสนใจ',p:'na son jai',e:'interesting'},{n:178,t:'น่าเบื่อ',p:'na buea',e:'boring'},{n:179,t:'คุ้มค่า',p:'khum kha',e:'worth it'},{n:180,t:'สุดยอด',p:'sut yot',e:'awesome / the best'}
+  ]},
+  {id:'questions', title:'Grammar & Particles', words:[
+    {n:181,t:'อะไร',p:'arai',e:'what'},{n:182,t:'ที่ไหน',p:'thi nai',e:'where'},{n:183,t:'ใคร',p:'khai',e:'who'},{n:184,t:'เมื่อไหร่',p:'muea rai',e:'when'},{n:185,t:'ทำไม',p:'tham mai',e:'why'},{n:186,t:'ยังไง',p:'yang ngai',e:'how'},{n:187,t:'เท่าไหร่',p:'thao rai',e:'how much'},{n:188,t:'กี่',p:'ki',e:'how many'},{n:189,t:'ไหน',p:'nai',e:'which'},{n:190,t:'ไหม',p:'mai',e:'(yes/no question)'},{n:191,t:'นะ',p:'na',e:'(softener / right?)'},{n:192,t:'เลย',p:'loei',e:'(emphasizer: really)'},{n:193,t:'ครับ',p:'khrap',e:'(male polite particle)'},{n:194,t:'ค่ะ',p:'kha',e:'(female polite particle)'},{n:195,t:'ก็',p:'ko',e:'also / then / so'},{n:196,t:'แต่',p:'tae',e:'but'},{n:197,t:'หรือ',p:'rue',e:'or'},{n:198,t:'และ',p:'lae',e:'and'},{n:199,t:'เพราะ',p:'phro',e:'because'},{n:200,t:'ถ้า',p:'tha',e:'if'},{n:201,t:'เพื่อ',p:'phuea',e:'in order to'},{n:202,t:'ก่อน',p:'kon',e:'before'},{n:203,t:'หลัง',p:'lang',e:'after'},{n:204,t:'ระหว่าง',p:'rawang',e:'between / during'},{n:205,t:'จริงๆ',p:'jing jing',e:'really / truly'},{n:206,t:'แล้ว',p:'laeo',e:'already / and then'},{n:207,t:'ยัง',p:'yang',e:'still / yet'},{n:208,t:'กำลัง',p:'gamlang',e:'(continuous marker)'},{n:209,t:'จะ',p:'ja',e:'(future marker)'},{n:210,t:'เพิ่ง',p:'phoeng',e:'just (did something)'}
+  ]},
+  {id:'numbers', title:'Numbers & Time', words:[
+    {n:211,t:'หนึ่ง',p:'nueng',e:'1'},{n:212,t:'สอง',p:'song',e:'2'},{n:213,t:'สาม',p:'sam',e:'3'},{n:214,t:'สี่',p:'si',e:'4'},{n:215,t:'ห้า',p:'ha',e:'5'},{n:216,t:'หก',p:'hok',e:'6'},{n:217,t:'เจ็ด',p:'jet',e:'7'},{n:218,t:'แปด',p:'paet',e:'8'},{n:219,t:'เก้า',p:'kao',e:'9'},{n:220,t:'สิบ',p:'sip',e:'10'},{n:221,t:'ยี่สิบ',p:'yi sip',e:'20'},{n:222,t:'ร้อย',p:'roi',e:'100'},{n:223,t:'พัน',p:'phan',e:'1,000'},{n:224,t:'ล้าน',p:'lan',e:'1,000,000'},{n:225,t:'วันนี้',p:'wan ni',e:'today'},{n:226,t:'เมื่อวาน',p:'muea wan',e:'yesterday'},{n:227,t:'พรุ่งนี้',p:'phrung ni',e:'tomorrow'},{n:228,t:'ตอนนี้',p:'ton ni',e:'now'},{n:229,t:'เช้า',p:'chao',e:'morning'},{n:230,t:'กลางวัน',p:'klang wan',e:'afternoon'},{n:231,t:'เย็น',p:'yen',e:'evening'},{n:232,t:'กลางคืน',p:'klang khuen',e:'night'},{n:233,t:'เที่ยง',p:'thiang',e:'noon'},{n:234,t:'จันทร์',p:'jan',e:'Monday'},{n:235,t:'อังคาร',p:'angkhan',e:'Tuesday'},{n:236,t:'พุธ',p:'phut',e:'Wednesday'},{n:237,t:'พฤหัส',p:'pharuehat',e:'Thursday'},{n:238,t:'ศุกร์',p:'suk',e:'Friday'},{n:239,t:'เสาร์',p:'sao',e:'Saturday'},{n:240,t:'อาทิตย์',p:'athit',e:'Sunday / week'},{n:241,t:'เดือน',p:'duean',e:'month'},{n:242,t:'ปี',p:'pi',e:'year'},{n:243,t:'ชั่วโมง',p:'chua mong',e:'hour'},{n:244,t:'นาที',p:'natee',e:'minute'},{n:245,t:'ครึ่ง',p:'khrueng',e:'half'},{n:246,t:'นาน',p:'nan',e:'long time'},{n:247,t:'บ่อย',p:'boi',e:'often'},{n:248,t:'เสมอ',p:'samoe',e:'always'},{n:249,t:'ไม่เคย',p:'mai khoei',e:'never'},{n:250,t:'บางที',p:'bang thi',e:'sometimes'}
+  ]},
+  {id:'places', title:'Places & Locations', words:[
+    {n:251,t:'ที่นี่',p:'thi ni',e:'here'},{n:252,t:'ที่นั่น',p:'thi nan',e:'there'},{n:253,t:'ข้างใน',p:'khang nai',e:'inside'},{n:254,t:'ข้างนอก',p:'khang nok',e:'outside'},{n:255,t:'ข้างบน',p:'khang bon',e:'above / upstairs'},{n:256,t:'ข้างล่าง',p:'khang lang',e:'below / downstairs'},{n:257,t:'ซ้าย',p:'sai',e:'left'},{n:258,t:'ขวา',p:'khwa',e:'right'},{n:259,t:'ตรงไป',p:'trong pai',e:'straight ahead'},{n:260,t:'ใกล้',p:'klai',e:'near'},{n:261,t:'ไกล',p:'klai',e:'far'},{n:262,t:'บ้าน',p:'ban',e:'house / home'},{n:263,t:'ห้อง',p:'hong',e:'room'},{n:264,t:'ห้องน้ำ',p:'hong nam',e:'bathroom / toilet'},{n:265,t:'ถนน',p:'thanon',e:'road / street'},{n:266,t:'ตลาด',p:'talat',e:'market'},{n:267,t:'ห้างสรรพสินค้า',p:'hang sap sincha',e:'shopping mall'},{n:268,t:'ร้านอาหาร',p:'ran ahan',e:'restaurant'},{n:269,t:'ร้าน',p:'ran',e:'shop / store'},{n:270,t:'โรงพยาบาล',p:'rong phayaban',e:'hospital'},{n:271,t:'ธนาคาร',p:'thanakhan',e:'bank'},{n:272,t:'โรงแรม',p:'rong raem',e:'hotel'},{n:273,t:'สนามบิน',p:'sanam bin',e:'airport'},{n:274,t:'วัด',p:'wat',e:'temple'},{n:275,t:'โรงเรียน',p:'rong rian',e:'school'},{n:276,t:'สำนักงาน',p:'samnak ngan',e:'office'},{n:277,t:'ชายหาด',p:'chai hat',e:'beach'},{n:278,t:'เกาะ',p:'ko',e:'island'},{n:279,t:'ภูเขา',p:'phu khao',e:'mountain'},{n:280,t:'สวนสาธารณะ',p:'suan satharana',e:'park'},{n:281,t:'ประตู',p:'pratuu',e:'door'},{n:282,t:'ลิฟต์',p:'lift',e:'elevator'},{n:283,t:'ซอย',p:'soi',e:'side street / soi'},{n:284,t:'เมือง',p:'mueang',e:'city / town'},{n:285,t:'ประเทศ',p:'prathet',e:'country'},{n:286,t:'ย่าน',p:'yan',e:'neighborhood / district'},{n:287,t:'สี่แยก',p:'si yaek',e:'intersection'},{n:288,t:'สะพาน',p:'saphan',e:'bridge'},{n:289,t:'ทางออก',p:'thang ok',e:'exit'},{n:290,t:'ทางเข้า',p:'thang khao',e:'entrance'}
+  ]},
+  {id:'food', title:'Food & Drink', words:[
+    {n:291,t:'อาหาร',p:'ahan',e:'food'},{n:292,t:'ข้าว',p:'khao',e:'rice'},{n:293,t:'ก๋วยเตี๋ยว',p:'kuaitiao',e:'noodles'},{n:294,t:'ผัดไทย',p:'phat Thai',e:'pad thai'},{n:295,t:'ต้มยำ',p:'tom yam',e:'tom yum soup'},{n:296,t:'แกง',p:'kaeng',e:'curry'},{n:297,t:'ผัดกะเพรา',p:'phat kaphrao',e:'basil stir fry'},{n:298,t:'ส้มตำ',p:'som tam',e:'papaya salad'},{n:299,t:'ไก่',p:'kai',e:'chicken'},{n:300,t:'หมู',p:'mu',e:'pork'},{n:301,t:'เนื้อ',p:'nuea',e:'beef'},{n:302,t:'ปลา',p:'pla',e:'fish'},{n:303,t:'กุ้ง',p:'kung',e:'shrimp'},{n:304,t:'ไข่',p:'khai',e:'egg'},{n:305,t:'เต้าหู้',p:'taohu',e:'tofu'},{n:306,t:'ผัก',p:'phak',e:'vegetables'},{n:307,t:'ผลไม้',p:'phonlamai',e:'fruit'},{n:308,t:'มะม่วง',p:'mamuang',e:'mango'},{n:309,t:'กล้วย',p:'kluai',e:'banana'},{n:310,t:'ทุเรียน',p:'thurian',e:'durian'},{n:311,t:'มะพร้าว',p:'maprao',e:'coconut'},{n:312,t:'น้ำ',p:'nam',e:'water'},{n:313,t:'น้ำแข็ง',p:'nam khaeng',e:'ice'},{n:314,t:'ชา',p:'cha',e:'tea'},{n:315,t:'กาแฟ',p:'kafae',e:'coffee'},{n:316,t:'เบียร์',p:'bia',e:'beer'},{n:317,t:'น้ำอัดลม',p:'nam at lom',e:'soda'},{n:318,t:'ขนม',p:'khanom',e:'snack / dessert'},{n:319,t:'ไอศกรีม',p:'ai sakhrim',e:'ice cream'},{n:320,t:'จาน',p:'jan',e:'plate'},{n:321,t:'ชาม',p:'cham',e:'bowl'},{n:322,t:'แก้ว',p:'kaeo',e:'glass / cup'},{n:323,t:'ช้อน',p:'chon',e:'spoon'},{n:324,t:'ส้อม',p:'som',e:'fork'},{n:325,t:'ตะเกียบ',p:'takiap',e:'chopsticks'},{n:326,t:'เมนู',p:'menu',e:'menu'},{n:327,t:'บิล',p:'bin',e:'bill'},{n:328,t:'ไม่เผ็ด',p:'mai phet',e:'not spicy'},{n:329,t:'ไม่ใส่',p:'mai sai',e:'without / don\'t add'},{n:330,t:'มังสวิรัติ',p:'mangsawirat',e:'vegetarian'},{n:331,t:'อาหารเช้า',p:'ahan chao',e:'breakfast'},{n:332,t:'อาหารกลางวัน',p:'ahan klang wan',e:'lunch'},{n:333,t:'อาหารเย็น',p:'ahan yen',e:'dinner'},{n:334,t:'น้ำปลา',p:'nam pla',e:'fish sauce'},{n:335,t:'พริก',p:'phrik',e:'chili'},{n:336,t:'กระเทียม',p:'krathiam',e:'garlic'},{n:337,t:'มะนาว',p:'manao',e:'lime'},{n:338,t:'น้ำตาล',p:'nam tan',e:'sugar'},{n:339,t:'เกลือ',p:'kluea',e:'salt'},{n:340,t:'ข้าวสวย',p:'khao suay',e:'steamed rice'}
+  ]},
+  {id:'transport', title:'Transport & Travel', words:[
+    {n:341,t:'รถ',p:'rot',e:'car / vehicle'},{n:342,t:'รถแท็กซี่',p:'rot thaeksi',e:'taxi'},{n:343,t:'รถตุ๊กตุ๊ก',p:'rot tuk-tuk',e:'tuk-tuk'},{n:344,t:'รถมอเตอร์ไซค์',p:'rot motorchai',e:'motorcycle'},{n:345,t:'รถเมล์',p:'rot me',e:'bus'},{n:346,t:'รถไฟ',p:'rot fai',e:'train'},{n:347,t:'เครื่องบิน',p:'khrueang bin',e:'airplane'},{n:348,t:'เรือ',p:'ruea',e:'boat'},{n:349,t:'รถไฟฟ้า',p:'rot fai fa',e:'BTS skytrain'},{n:350,t:'แกร็บ',p:'Grab',e:'Grab (rideshare)'},{n:351,t:'ตั๋ว',p:'tua',e:'ticket'},{n:352,t:'ราคา',p:'rakha',e:'price'},{n:353,t:'จราจร',p:'jarajorn',e:'traffic'},{n:354,t:'ติดรถ',p:'tit rot',e:'traffic jam'},{n:355,t:'แผนที่',p:'phaen thi',e:'map'},{n:356,t:'เส้นทาง',p:'sen thang',e:'route'},{n:357,t:'หนังสือเดินทาง',p:'nangsuea doen thang',e:'passport'},{n:358,t:'วีซ่า',p:'wisa',e:'visa'},{n:359,t:'สัมภาระ',p:'somphaara',e:'luggage'},{n:360,t:'เที่ยวบิน',p:'thiao bin',e:'flight'},{n:361,t:'ขาออก',p:'kha ok',e:'departure'},{n:362,t:'ขาเข้า',p:'kha khao',e:'arrival'},{n:363,t:'ทางด่วน',p:'thang duan',e:'expressway'},{n:364,t:'ไฟแดง',p:'fai daeng',e:'red light'},{n:365,t:'ปั๊มน้ำมัน',p:'pam nam man',e:'gas station'},{n:366,t:'จอดรถ',p:'jot rot',e:'to park a car'},{n:367,t:'ขับรถ',p:'khap rot',e:'to drive a car'},{n:368,t:'เช็คอิน',p:'check in',e:'check in'},{n:369,t:'ที่จอดรถ',p:'thi jot rot',e:'parking lot'},{n:370,t:'ชานชาลา',p:'chan chala',e:'platform'}
+  ]},
+  {id:'health', title:'Health & Emergencies', words:[
+    {n:371,t:'หมอ',p:'mo',e:'doctor'},{n:372,t:'พยาบาล',p:'phayaban',e:'nurse'},{n:373,t:'ยา',p:'ya',e:'medicine'},{n:374,t:'เจ็บ',p:'jep',e:'pain / hurt'},{n:375,t:'ป่วย',p:'puay',e:'sick'},{n:376,t:'ไข้',p:'khai',e:'fever'},{n:377,t:'ไอ',p:'ai',e:'cough'},{n:378,t:'ปวดหัว',p:'puat hua',e:'headache'},{n:379,t:'ปวดท้อง',p:'puat thong',e:'stomachache'},{n:380,t:'แพ้',p:'phae',e:'allergy'},{n:381,t:'บาดเจ็บ',p:'bat jep',e:'injured'},{n:382,t:'เลือด',p:'lueat',e:'blood'},{n:383,t:'ช่วยด้วย!',p:'chuay duay!',e:'Help!'},{n:384,t:'ตำรวจ',p:'tamruat',e:'police'},{n:385,t:'ฉุกเฉิน',p:'chuk choen',e:'emergency'},{n:386,t:'ยาแก้ปวด',p:'ya kae puat',e:'painkiller'},{n:387,t:'ดีขึ้น',p:'di khuen',e:'getting better'},{n:388,t:'หายแล้ว',p:'hai laeo',e:'recovered'},{n:389,t:'นัดหมาย',p:'nat mai',e:'appointment'},{n:390,t:'อาการ',p:'akaan',e:'symptom'}
+  ]},
+  {id:'shopping', title:'Shopping & Money', words:[
+    {n:391,t:'เงิน',p:'ngoen',e:'money'},{n:392,t:'บาท',p:'baht',e:'baht (Thai currency)'},{n:393,t:'ราคา',p:'rakha',e:'price'},{n:394,t:'ส่วนลด',p:'suan lot',e:'discount'},{n:395,t:'ลด',p:'lot',e:'to reduce'},{n:396,t:'ต่อรอง',p:'to rong',e:'to negotiate'},{n:397,t:'เงินสด',p:'ngoen sot',e:'cash'},{n:398,t:'บัตรเครดิต',p:'bat khredit',e:'credit card'},{n:399,t:'ใบเสร็จ',p:'bai set',e:'receipt'},{n:400,t:'แดง',p:'daeng',e:'red'},{n:401,t:'น้ำเงิน',p:'nam ngoen',e:'blue'},{n:402,t:'เขียว',p:'khiao',e:'green'},{n:403,t:'เหลือง',p:'lueang',e:'yellow'},{n:404,t:'ดำ',p:'dam',e:'black'},{n:405,t:'ขาว',p:'khao',e:'white'},{n:406,t:'ชมพู',p:'chompu',e:'pink'},{n:407,t:'ส้ม',p:'som',e:'orange'},{n:408,t:'ม่วง',p:'muang',e:'purple'},{n:409,t:'พอดี',p:'pho di',e:'fits / just right'},{n:410,t:'ใหญ่ไป',p:'yai pai',e:'too big'},{n:411,t:'เล็กไป',p:'lek pai',e:'too small'},{n:412,t:'ของฝาก',p:'khong fak',e:'gift / souvenir'},{n:413,t:'แลกเงิน',p:'laek ngoen',e:'currency exchange'},{n:414,t:'ไซส์',p:'sai',e:'size'},{n:415,t:'ลอง',p:'long',e:'to try on'},{n:416,t:'ถุง',p:'thung',e:'bag'},{n:417,t:'ห่อ',p:'ho',e:'to wrap'},{n:418,t:'ของที่ระลึก',p:'khong thi raluek',e:'souvenir'},{n:419,t:'ร้านขายยา',p:'ran khai ya',e:'pharmacy'},{n:420,t:'ห้างสรรพสินค้า',p:'hang sap sincha',e:'shopping mall'}
+  ]},
+  {id:'work', title:'Work & Daily Life', words:[
+    {n:421,t:'งาน',p:'ngan',e:'work / job'},{n:422,t:'บริษัท',p:'borisat',e:'company'},{n:423,t:'ประชุม',p:'prachum',e:'meeting'},{n:424,t:'เจ้านาย',p:'jao nai',e:'boss'},{n:425,t:'เพื่อนร่วมงาน',p:'phuean ruam ngan',e:'colleague'},{n:426,t:'เงินเดือน',p:'ngoen duean',e:'salary'},{n:427,t:'วันหยุด',p:'wan yut',e:'holiday / day off'},{n:428,t:'มือถือ',p:'mue thue',e:'mobile phone'},{n:429,t:'คอมพิวเตอร์',p:'computer',e:'computer'},{n:430,t:'อินเทอร์เน็ต',p:'internet',e:'internet'},{n:431,t:'WiFi',p:'WiFi',e:'WiFi'},{n:432,t:'LINE',p:'Line',e:'LINE (messaging app)'},{n:433,t:'บ้านเช่า',p:'ban chao',e:'rental house'},{n:434,t:'ค่าเช่า',p:'kha chao',e:'rent'},{n:435,t:'กุญแจ',p:'kunjae',e:'key'},{n:436,t:'แอร์',p:'ae',e:'air conditioning'},{n:437,t:'เตียง',p:'tiang',e:'bed'},{n:438,t:'ตู้เย็น',p:'tu yen',e:'refrigerator'},{n:439,t:'เสื้อผ้า',p:'suea pha',e:'clothes'},{n:440,t:'รองเท้า',p:'rong thao',e:'shoes'},{n:441,t:'กระเป๋า',p:'krapo',e:'bag / purse'},{n:442,t:'แว่นตา',p:'waen ta',e:'glasses'},{n:443,t:'หมวก',p:'muak',e:'hat'},{n:444,t:'กางเกง',p:'kangkeng',e:'pants'},{n:445,t:'เสื้อ',p:'suea',e:'shirt'},{n:446,t:'กระโปรง',p:'kraprong',e:'skirt'},{n:447,t:'ซักรีด',p:'sak rit',e:'laundry'},{n:448,t:'ทำความสะอาด',p:'tham khwam sa-at',e:'to clean'},{n:449,t:'ขยะ',p:'khaya',e:'trash / garbage'},{n:450,t:'ค่าไฟ',p:'kha fai',e:'electricity bill'}
+  ]},
+  {id:'social', title:'Social & Conversational', words:[
+    {n:451,t:'จริงๆ',p:'jing jing',e:'really'},{n:452,t:'แน่นอน',p:'nae non',e:'of course'},{n:453,t:'โอเค',p:'o-ke',e:'okay'},{n:454,t:'ไม่เป็นไร',p:'mai pen rai',e:'no problem'},{n:455,t:'ขึ้นอยู่กับ',p:'khuen yu kap',e:'depends on'},{n:456,t:'ปกติ',p:'pokkati',e:'usually / normally'},{n:457,t:'เสมอ',p:'samoe',e:'always'},{n:458,t:'ไม่เคย',p:'mai khoei',e:'never'},{n:459,t:'เคย',p:'khoei',e:'used to / ever'},{n:460,t:'อีกครั้ง',p:'ik khrang',e:'again'},{n:461,t:'ทีหลัง',p:'thi lang',e:'later'},{n:462,t:'เดี๋ยวนี้',p:'diao ni',e:'right now'},{n:463,t:'รีบ',p:'rip',e:'hurry'},{n:464,t:'เกือบ',p:'kuap',e:'almost'},{n:465,t:'ประมาณ',p:'prama',e:'approximately'},{n:466,t:'อาจจะ',p:'at ja',e:'maybe'},{n:467,t:'คงจะ',p:'khong ja',e:'probably'},{n:468,t:'โดยเฉพาะ',p:'doi chaphaw',e:'especially'},{n:469,t:'อีกด้วย',p:'ik duay',e:'also / as well'},{n:470,t:'ยิ่งกว่านั้น',p:'ying kwa nan',e:'moreover'},{n:471,t:'ดีกว่า',p:'di kwa',e:'better than'},{n:472,t:'แย่กว่า',p:'yae kwa',e:'worse than'},{n:473,t:'ที่สุด',p:'thi sut',e:'the most / -est'},{n:474,t:'เป็นไปได้',p:'pen pai dai',e:'possible'},{n:475,t:'เป็นไปไม่ได้',p:'pen pai mai dai',e:'impossible'},{n:476,t:'คุ้มค่า',p:'khum kha',e:'worth it'},{n:477,t:'เสียเวลา',p:'sia wela',e:'waste of time'},{n:478,t:'คืนนี้',p:'khuen ni',e:'tonight'},{n:479,t:'อาทิตย์หน้า',p:'athit na',e:'next week'},{n:480,t:'ปีหน้า',p:'pi na',e:'next year'},{n:481,t:'สบายดีไหม?',p:'sabai di mai?',e:'Are you well?'},{n:482,t:'เป็นไงบ้าง?',p:'pen ngai bang?',e:'How\'s it going?'},{n:483,t:'ว่างไหม?',p:'wang mai?',e:'Are you free?'},{n:484,t:'นัด',p:'nat',e:'appointment / date'},{n:485,t:'สนใจไหม?',p:'son jai mai?',e:'Interested?'},{n:486,t:'ลองดู',p:'long du',e:'give it a shot'},{n:487,t:'แล้วแต่',p:'laeo tae',e:'up to / depends'},{n:488,t:'หวังว่า',p:'wang wa',e:'hope that'},{n:489,t:'บอกว่า',p:'bok wa',e:'said that'},{n:490,t:'ดูเหมือนว่า',p:'du muean wa',e:'seems like'}
+  ]},
+  {id:'connectors', title:'Connectors & Advanced', words:[
+    {n:491,t:'เพราะว่า',p:'phro wa',e:'because'},{n:492,t:'ดังนั้น',p:'dang nan',e:'therefore / so'},{n:493,t:'แม้แต่',p:'mae tae',e:'even'},{n:494,t:'ทั้งที่',p:'thang thi',e:'even though'},{n:495,t:'เพื่อที่จะ',p:'phuea thi ja',e:'so that'},{n:496,t:'ตั้งแต่',p:'tang tae',e:'since / from'},{n:497,t:'จนถึง',p:'jon thueng',e:'until'},{n:498,t:'นอกจาก',p:'nok jak',e:'except / besides'},{n:499,t:'รวมถึง',p:'ruam thueng',e:'including'},{n:500,t:'สำหรับ',p:'samrap',e:'for'},{n:501,t:'เกี่ยวกับ',p:'kiao kap',e:'about / regarding'},{n:502,t:'โดย',p:'doi',e:'by / via'},{n:503,t:'แทนที่จะ',p:'thean thi ja',e:'instead of'},{n:504,t:'ยิ่งไปกว่านั้น',p:'ying pai kwa nan',e:'furthermore'},{n:505,t:'ตรงกันข้าม',p:'trong kan kham',e:'on the contrary'},{n:506,t:'สรุปได้ว่า',p:'sarup dai wa',e:'in summary'},{n:507,t:'โดยรวม',p:'doi ruam',e:'overall'},{n:508,t:'ส่วนใหญ่',p:'suan yai',e:'mostly'},{n:509,t:'ทั้งหมด',p:'thang mot',e:'entirely / all'},{n:510,t:'ไม่ว่าจะ',p:'mai wa ja',e:'no matter what'}
+  ]},
+  {id:'nature', title:'Nature & Environment', words:[
+    {n:511,t:'อากาศ',p:'akat',e:'weather'},{n:512,t:'ร้อน',p:'ron',e:'hot'},{n:513,t:'หนาว',p:'nao',e:'cold'},{n:514,t:'ฝน',p:'fon',e:'rain'},{n:515,t:'แดด',p:'daet',e:'sun / sunshine'},{n:516,t:'ลม',p:'lom',e:'wind'},{n:517,t:'เมฆ',p:'mek',e:'cloud'},{n:518,t:'น้ำท่วม',p:'nam thuam',e:'flood'},{n:519,t:'ทะเล',p:'thale',e:'sea'},{n:520,t:'แม่น้ำ',p:'mae nam',e:'river'},{n:521,t:'ป่า',p:'pa',e:'forest'},{n:522,t:'ต้นไม้',p:'ton mai',e:'tree'},{n:523,t:'ดอกไม้',p:'dok mai',e:'flower'},{n:524,t:'หมา',p:'ma',e:'dog'},{n:525,t:'แมว',p:'maeo',e:'cat'},{n:526,t:'ช้าง',p:'chang',e:'elephant'},{n:527,t:'นก',p:'nok',e:'bird'},{n:528,t:'ยุง',p:'yung',e:'mosquito'},{n:529,t:'มลพิษ',p:'monlaphit',e:'pollution'},{n:530,t:'ขยะ',p:'khaya',e:'trash / garbage'}
+  ]},
+  {id:'education', title:'Education & Learning', words:[
+    {n:531,t:'ภาษา',p:'phasa',e:'language'},{n:532,t:'ภาษาไทย',p:'phasa Thai',e:'Thai language'},{n:533,t:'ภาษาอังกฤษ',p:'phasa Angkrit',e:'English'},{n:534,t:'คำ',p:'kham',e:'word'},{n:535,t:'ประโยค',p:'prayok',e:'sentence'},{n:536,t:'ไวยากรณ์',p:'waiyakron',e:'grammar'},{n:537,t:'การออกเสียง',p:'kan ok siang',e:'pronunciation'},{n:538,t:'วรรณยุกต์',p:'wannayuk',e:'tone (in Thai)'},{n:539,t:'พจนานุกรม',p:'photchananukhrom',e:'dictionary'},{n:540,t:'หนังสือ',p:'nangsuea',e:'book'},{n:541,t:'บทเรียน',p:'bot rian',e:'lesson'},{n:542,t:'การบ้าน',p:'kan ban',e:'homework'},{n:543,t:'สอบ',p:'sop',e:'exam / test'},{n:544,t:'ผ่าน',p:'phan',e:'to pass'},{n:545,t:'ตก',p:'tok',e:'to fail'},{n:546,t:'คะแนน',p:'khaen',e:'score'},{n:547,t:'ความรู้',p:'khwam ru',e:'knowledge'},{n:548,t:'ทักษะ',p:'thaksa',e:'skill'},{n:549,t:'ความหมาย',p:'khwam mai',e:'meaning'},{n:550,t:'ครู',p:'khru',e:'teacher'}
+  ]},
+  {id:'body', title:'Body & Health', words:[
+    {n:551,t:'ร่างกาย',p:'rang gai',e:'body'},{n:552,t:'หัว',p:'hua',e:'head'},{n:553,t:'ผม',p:'phom',e:'hair'},{n:554,t:'หน้า',p:'na',e:'face'},{n:555,t:'ตา',p:'ta',e:'eyes'},{n:556,t:'หู',p:'hu',e:'ears'},{n:557,t:'จมูก',p:'jamuk',e:'nose'},{n:558,t:'ปาก',p:'pak',e:'mouth'},{n:559,t:'ฟัน',p:'fan',e:'teeth'},{n:560,t:'คอ',p:'kho',e:'neck'},{n:561,t:'ไหล่',p:'lai',e:'shoulder'},{n:562,t:'แขน',p:'khaen',e:'arm'},{n:563,t:'มือ',p:'mue',e:'hand'},{n:564,t:'นิ้ว',p:'niu',e:'finger'},{n:565,t:'อก',p:'ok',e:'chest'},{n:566,t:'ท้อง',p:'thong',e:'stomach'},{n:567,t:'หลัง',p:'lang',e:'back'},{n:568,t:'ขา',p:'kha',e:'leg'},{n:569,t:'เข่า',p:'khao',e:'knee'},{n:570,t:'เท้า',p:'thao',e:'foot'},{n:571,t:'ผิว',p:'phio',e:'skin'},{n:572,t:'กระดูก',p:'kraduk',e:'bone'},{n:573,t:'เลือด',p:'lueat',e:'blood'},{n:574,t:'หัวใจ',p:'hua jai',e:'heart'},{n:575,t:'สมอง',p:'samong',e:'brain'},{n:576,t:'ผอม',p:'phom',e:'thin'},{n:577,t:'อ้วน',p:'uan',e:'fat'},{n:578,t:'สูง',p:'sung',e:'tall'},{n:579,t:'เตี้ย',p:'tia',e:'short (height)'},{n:580,t:'สวย / หล่อ',p:'suay / lo',e:'beautiful / handsome'}
+  ]},
+  {id:'entertainment', title:'Entertainment & Hobbies', words:[
+    {n:581,t:'ดูหนัง',p:'du nang',e:'watch a movie'},{n:582,t:'เพลง',p:'phleng',e:'song / music'},{n:583,t:'ดนตรี',p:'dontri',e:'music'},{n:584,t:'เต้น',p:'ten',e:'to dance'},{n:585,t:'ร้องเพลง',p:'rong phleng',e:'to sing'},{n:586,t:'กีฬา',p:'kila',e:'sport'},{n:587,t:'ฟุตบอล',p:'fut bon',e:'football / soccer'},{n:588,t:'วิ่ง',p:'wing',e:'to run'},{n:589,t:'ว่ายน้ำ',p:'wai nam',e:'to swim'},{n:590,t:'มวยไทย',p:'muay Thai',e:'Muay Thai'},{n:591,t:'ท่องเที่ยว',p:'thong thiao',e:'to travel'},{n:592,t:'ถ่ายรูป',p:'thai rup',e:'photography'},{n:593,t:'ปั่นจักรยาน',p:'pan jakrayan',e:'cycling'},{n:594,t:'ตกปลา',p:'tok pla',e:'fishing'},{n:595,t:'นวด',p:'nuat',e:'massage'},{n:596,t:'สปา',p:'spa',e:'spa'},{n:597,t:'งานเลี้ยง',p:'ngan liang',e:'gathering / party'},{n:598,t:'เทศกาล',p:'thetsakan',e:'festival'},{n:599,t:'สงกรานต์',p:'Songkran',e:'Thai New Year'},{n:600,t:'ลอยกระทง',p:'Loi Krathong',e:'Loi Krathong festival'},{n:601,t:'งานแต่งงาน',p:'ngan taeng ngan',e:'wedding'},{n:602,t:'ของขวัญ',p:'khong khwan',e:'gift'},{n:603,t:'ฉลอง',p:'chalong',e:'to celebrate'},{n:604,t:'สุขสันต์วันเกิด',p:'suk san wan koet',e:'happy birthday'},{n:605,t:'โชคดี',p:'chok di',e:'good luck'}
+  ]},
+  {id:'fillers', title:'Fillers, Slang & Culture', words:[
+    {n:606,t:'อ้อ',p:'o',e:'oh (realization)'},{n:607,t:'โอ้โห',p:'o-ho',e:'wow'},{n:608,t:'เฮ้',p:'he',e:'hey'},{n:609,t:'นะ',p:'na',e:'(softener / right?)'},{n:610,t:'เลย',p:'loei',e:'so / really / just'},{n:611,t:'ด้วย',p:'duay',e:'also / too'},{n:612,t:'แหละ',p:'lae',e:'(emphasis particle)'},{n:613,t:'ล่ะ',p:'la',e:'(question softener)'},{n:614,t:'ไง',p:'ngai',e:'how / like that'},{n:615,t:'กัน',p:'kan',e:'together / each other'},{n:616,t:'เอง',p:'eng',e:'oneself / by itself'},{n:617,t:'ก่อน',p:'kon',e:'first / before'},{n:618,t:'ก็ได้',p:'ko dai',e:'it\'s fine / can do'},{n:619,t:'สนุกดี',p:'sanuk di',e:'fun / enjoyable'},{n:620,t:'ตามสบาย',p:'tam sabai',e:'as you like / feel free'},{n:621,t:'เชิญ',p:'choen',e:'please go ahead / welcome'},{n:622,t:'ยินดีต้อนรับ',p:'yin di ton rap',e:'welcome'},{n:623,t:'ขอให้โชคดี',p:'kho hai chok di',e:'good luck'},{n:624,t:'ระวัง',p:'rawang',e:'be careful'},{n:625,t:'ไม่ได้ตั้งใจ',p:'mai dai tang jai',e:'didn\'t mean to'},{n:626,t:'เป็นไงบ้าง?',p:'pen ngai bang?',e:'How\'s it going?'},{n:627,t:'ไม่ว่าง',p:'mai wang',e:'not free / busy'},{n:628,t:'ออกไปกิน',p:'ok pai gin',e:'go out to eat'},{n:629,t:'ดื่มกัน',p:'duem kan',e:'drink together'},{n:630,t:'ไปเที่ยว',p:'pai thiao',e:'go out / travel'},{n:631,t:'ลองดู',p:'long du',e:'let\'s try'},{n:632,t:'คิดว่า',p:'khit wa',e:'think that'},{n:633,t:'รู้สึกว่า',p:'ru suek wa',e:'feel that'},{n:634,t:'สงสัยว่า',p:'song sai wa',e:'wonder if'},{n:635,t:'ดูเหมือน',p:'du muean',e:'seems like'},{n:636,t:'กลายเป็น',p:'klai pen',e:'became'},{n:637,t:'ยังคง',p:'yang khong',e:'still (remains)'},{n:638,t:'ประสบความสำเร็จ',p:'prasop khwam samret',e:'to succeed'},{n:639,t:'ล้มเหลว',p:'lom leo',e:'to fail'},{n:640,t:'ไม่เป็นไรหรอก',p:'mai pen rai rok',e:'it\'s really fine'}
+  ]}
+];
+
+function renderAll() {
+  const container = document.getElementById('wordsSections');
+  container.innerHTML = '';
+  categories.forEach(cat => {
+    const sec = document.createElement('div');
+    sec.className = 'category-block';
+    sec.dataset.cat = cat.id;
+    sec.innerHTML = `<div class="cat-header"><div class="cat-title">${cat.title}</div><span class="cat-count">${cat.words.length} words</span></div><div class="word-grid" id="grid-${cat.id}"></div>`;
+    container.appendChild(sec);
+    const grid = document.getElementById('grid-' + cat.id);
+    cat.words.forEach(w => {
+      const card = document.createElement('div');
+      card.className = 'word-card';
+      card.dataset.thai = w.t;
+      card.dataset.phonetic = w.p.toLowerCase();
+      card.dataset.english = w.e.toLowerCase();
+      card.dataset.cat = cat.id;
+      card.innerHTML = `<div class="word-num">#${w.n}</div><div class="word-thai">${w.t}</div><div class="word-phonetic">${w.p}</div><div class="word-english">${w.e}</div>`;
+      grid.appendChild(card);
+    });
+  });
+  updateCount();
+}
+
+function filterWords() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  document.querySelectorAll('.word-card').forEach(card => {
+    const match = !q || card.dataset.thai.includes(q) || card.dataset.phonetic.includes(q) || card.dataset.english.includes(q);
+    card.classList.toggle('hidden', !match);
+  });
+  document.querySelectorAll('.category-block').forEach(sec => {
+    const visible = sec.querySelectorAll('.word-card:not(.hidden)').length;
+    sec.style.display = visible === 0 ? 'none' : '';
+  });
+  updateCount();
+}
+
+let activeCat = 'all';
+function filterCat(cat, el) {
+  activeCat = cat;
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('searchInput').value = '';
+  document.querySelectorAll('.word-card').forEach(card => card.classList.remove('hidden'));
+  document.querySelectorAll('.category-block').forEach(sec => {
+    sec.style.display = (cat === 'all' || sec.dataset.cat === cat) ? '' : 'none';
+  });
+  updateCount();
+}
+
+function updateCount() {
+  const visible = document.querySelectorAll('.word-card:not(.hidden)').length;
+  const total = document.querySelectorAll('.word-card').length;
+  const el = document.getElementById('result-count');
+  el.textContent = visible < total ? `Showing ${visible} of ${total} words` : `${total} words total`;
+}
+
+renderAll();
+</script>
+</body>
+</html>
