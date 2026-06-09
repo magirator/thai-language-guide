@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Real-Life Conversations — Thai Language</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --cream:#FAF8F4;--cream2:#F4F1EB;--white:#FFFFFF;
+    --gold:#B8976A;--gold-light:#E8D9C0;
+    --text:#1D1D1F;--text-secondary:#6E6E73;--text-light:#A1A1A6;
+    --border:#E8E3DA;
+    --shadow:0 4px 30px rgba(0,0,0,0.06);
+    --shadow-hover:0 12px 50px rgba(0,0,0,0.10);
+    --bubble-you:#F4F1EB;
+    --bubble-them:#FFFFFF;
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  nav .logo{font-size:15px;font-weight:600;letter-spacing:-0.3px;}
+  nav .logo span{color:var(--gold);}
+  nav .nav-links{display:flex;gap:32px;}
+  nav .nav-links a{font-size:13px;color:var(--text-secondary);text-decoration:none;font-weight:500;transition:color 0.2s;}
+  nav .nav-links a:hover{color:var(--gold);}
+
+  .hero{padding:110px 40px 70px;max-width:900px;margin:0 auto;text-align:center;}
+  .badge{display:inline-block;background:var(--gold-light);color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:28px;}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-2px;line-height:1.05;margin-bottom:22px;}
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero p{font-size:18px;color:var(--text-secondary);max-width:560px;margin:0 auto;line-height:1.7;}
+
+  .divider{width:60px;height:1px;background:var(--gold);margin:70px auto;opacity:0.4;}
+
+  .section{max-width:960px;margin:0 auto;padding:0 40px 80px;}
+  .section-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+  .section-title{font-size:clamp(26px,4vw,42px);font-weight:700;letter-spacing:-1px;margin-bottom:14px;line-height:1.15;}
+  .section-desc{font-size:17px;color:var(--text-secondary);max-width:600px;line-height:1.7;margin-bottom:44px;}
+
+  /* SCENARIO GRID */
+  .scenario-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-bottom:60px;}
+  .scenario-pill{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow);cursor:pointer;transition:box-shadow 0.2s,transform 0.2s;}
+  .scenario-pill:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px);}
+  .scenario-pill .icon{font-size:22px;flex-shrink:0;}
+  .scenario-pill .info .title{font-size:15px;font-weight:700;margin-bottom:2px;}
+  .scenario-pill .info .sub{font-size:12px;color:var(--text-secondary);}
+
+  /* CONVERSATION CARD */
+  .convo-card{background:var(--white);border:1px solid var(--border);border-radius:24px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:28px;}
+  .convo-header{padding:24px 28px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:16px;}
+  .convo-icon{font-size:28px;flex-shrink:0;margin-top:2px;}
+  .convo-header-text h3{font-size:20px;font-weight:700;letter-spacing:-0.4px;margin-bottom:4px;}
+  .convo-header-text .setting{font-size:14px;color:var(--text-secondary);}
+  .convo-body{padding:28px;}
+
+  /* CHAT BUBBLES */
+  .chat-exchange{margin-bottom:20px;display:flex;flex-direction:column;gap:10px;}
+  .bubble-row{display:flex;align-items:flex-end;gap:10px;}
+  .bubble-row.them{flex-direction:row;}
+  .bubble-row.you{flex-direction:row-reverse;}
+  .avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+  .avatar.them-avatar{background:var(--gold-light);color:var(--gold);}
+  .avatar.you-avatar{background:#E8F0E8;color:#5A7A5A;}
+  .bubble{max-width:75%;border-radius:18px;padding:12px 16px;}
+  .bubble.them{background:var(--white);border:1px solid var(--border);border-bottom-left-radius:4px;}
+  .bubble.you{background:var(--cream2);border-bottom-right-radius:4px;}
+  .bubble .thai{font-size:15px;font-weight:600;color:var(--text);margin-bottom:3px;}
+  .bubble .phonetic{font-size:12px;color:var(--gold);margin-bottom:3px;font-style:italic;}
+  .bubble .english{font-size:12px;color:var(--text-secondary);}
+  .speaker-label{font-size:11px;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;color:var(--text-light);margin-bottom:4px;}
+  .speaker-label.them-label{text-align:left;padding-left:42px;}
+  .speaker-label.you-label{text-align:right;padding-right:42px;}
+
+  /* TIP BOX */
+  .tip-box{margin:20px 0 0;padding:16px 18px;background:var(--gold-light);border-radius:12px;font-size:14px;color:var(--text-secondary);display:flex;gap:10px;align-items:flex-start;}
+  .tip-box::before{content:"💡";flex-shrink:0;}
+
+  footer{text-align:center;padding:60px 40px;border-top:1px solid var(--border);font-size:13px;color:var(--text-light);}
+  .footer-nav{display:flex;justify-content:center;gap:40px;margin-bottom:20px;flex-wrap:wrap;}
+  .footer-nav a{font-size:14px;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;}
+  .footer-nav a:hover{color:var(--gold);}
+
+  @media(max-width:640px){
+    nav{padding:0 20px;} nav .nav-links{display:none;}
+    .hero{padding:80px 20px 50px;} .section{padding:0 20px 60px;}
+    .convo-header{padding:18px;} .convo-body{padding:18px;}
+    .bubble{max-width:88%;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🇹🇭 Thai&nbsp;<span>Language</span></div>
+  <div class="nav-links">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">Part 3 — Conversations</div>
+  <h1>Speak Like a<br><em>Native</em> from<br>Day One</h1>
+  <p>Five fully scripted real-life simulations. Read both roles out loud. Then improvise. This is how you get fluent fast.</p>
+</div>
+
+<div class="divider"></div>
+
+<div class="section">
+  <div class="section-label">5 Scenarios</div>
+  <div class="section-title">Real Situations,<br>Real Thai</div>
+  <p class="section-desc">Every conversation uses authentic, natural Thai — the same phrases a native speaker would actually use. Phonetics are included for every line.</p>
+
+  <div class="scenario-grid">
+    <div class="scenario-pill"><span class="icon">🍜</span><div class="info"><div class="title">Ordering Food</div><div class="sub">Street stall — Pad Thai</div></div></div>
+    <div class="scenario-pill"><span class="icon">🗺️</span><div class="info"><div class="title">Asking Directions</div><div class="sub">Finding a temple</div></div></div>
+    <div class="scenario-pill"><span class="icon">☕</span><div class="info"><div class="title">Casual Chat</div><div class="sub">Getting to know someone</div></div></div>
+    <div class="scenario-pill"><span class="icon">🏨</span><div class="info"><div class="title">Hotel Check-In</div><div class="sub">Booking a room</div></div></div>
+    <div class="scenario-pill"><span class="icon">🛍️</span><div class="info"><div class="title">Market Shopping</div><div class="sub">Chatuchak — price negotiation</div></div></div>
+  </div>
+</div>
+
+<!-- Simulation 1 -->
+<div class="section" style="padding-top:0;">
+
+  <div class="convo-card">
+    <div class="convo-header">
+      <span class="convo-icon">🍜</span>
+      <div class="convo-header-text">
+        <h3>Ordering Food at a Street Stall</h3>
+        <div class="setting">Setting: A pad thai street stall. You approach the vendor.</div>
+      </div>
+    </div>
+    <div class="convo-body">
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">สวัสดีครับ มีผัดไทยไหมครับ?</div>
+            <div class="phonetic">Sawatdee khrap. Mi phat Thai mai khrap?</div>
+            <div class="english">Hello. Do you have pad thai?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">👩‍🍳</div>
+          <div class="bubble them">
+            <div class="thai">มีครับ จะเอาไรครับ?</div>
+            <div class="phonetic">Mi khrap. Ja ao arai khrap?</div>
+            <div class="english">Yes we have it. What would you like?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">เอาผัดไทยหนึ่งจานครับ ไม่ใส่ผักชีนะครับ</div>
+            <div class="phonetic">Ao phat Thai nueng jan khrap. Mai sai phak chi na khrap.</div>
+            <div class="english">One plate of pad thai please. No coriander.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">👩‍🍳</div>
+          <div class="bubble them">
+            <div class="thai">ใส่กุ้งไหมครับ?</div>
+            <div class="phonetic">Sai gung mai khrap?</div>
+            <div class="english">With shrimp?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ใส่ครับ แล้วก็ไม่เผ็ดมากนะครับ</div>
+            <div class="phonetic">Sai khrap. Laeo ko mai phet mak na khrap.</div>
+            <div class="english">Yes with shrimp. And not too spicy please.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">👩‍🍳</div>
+          <div class="bubble them">
+            <div class="thai">ได้ครับ รอแป๊บนึงนะครับ</div>
+            <div class="phonetic">Dai khrap. Ro paep nueng na khrap.</div>
+            <div class="english">Okay. Wait just a moment.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ขอบคุณครับ เท่าไหร่ครับ?</div>
+            <div class="phonetic">Khop khun khrap. Thao rai khrap?</div>
+            <div class="english">Thank you. How much?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">👩‍🍳</div>
+          <div class="bubble them">
+            <div class="thai">หกสิบบาทครับ</div>
+            <div class="phonetic">Hok sip baht khrap.</div>
+            <div class="english">60 baht.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">Key phrase: <strong>ไม่ใส่ ___ นะครับ</strong> (mai sai ___ na khrap) = "no ___ please." Use this pattern to customize any dish.</div>
+    </div>
+  </div>
+
+  <!-- Simulation 2 -->
+  <div class="convo-card">
+    <div class="convo-header">
+      <span class="convo-icon">🗺️</span>
+      <div class="convo-header-text">
+        <h3>Asking for Directions</h3>
+        <div class="setting">Setting: You're lost near a temple. You stop a local.</div>
+      </div>
+    </div>
+    <div class="convo-body">
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ขอโทษครับ วัดพระแก้วอยู่ที่ไหนครับ?</div>
+            <div class="phonetic">Kho thot khrap. Wat Phra Kaeo yu thi nai khrap?</div>
+            <div class="english">Excuse me. Where is the Temple of the Emerald Buddha?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Local</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🧑</div>
+          <div class="bubble them">
+            <div class="thai">อยู่ไม่ไกลครับ เดินตรงไปแล้วเลี้ยวซ้ายครับ</div>
+            <div class="phonetic">Yu mai klai khrap. Doen trong pai laeo liao sai khrap.</div>
+            <div class="english">Not far. Walk straight then turn left.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">เดินไปได้ไหมครับ ไกลแค่ไหนครับ?</div>
+            <div class="phonetic">Doen pai dai mai khrap? Klai khae nai khrap?</div>
+            <div class="english">Can I walk there? How far is it?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Local</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🧑</div>
+          <div class="bubble them">
+            <div class="thai">ได้ครับ ประมาณสิบห้านาทีครับ</div>
+            <div class="phonetic">Dai khrap. Prama sip ha natee khrap.</div>
+            <div class="english">Yes. About 15 minutes.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ข้ามถนนด้วยไหมครับ?</div>
+            <div class="phonetic">Kham thanon duay mai khrap?</div>
+            <div class="english">Do I cross the road?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Local</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🧑</div>
+          <div class="bubble them">
+            <div class="thai">ครับ ข้ามไฟแดงอันแรกแล้วตรงไปครับ</div>
+            <div class="phonetic">Khrap. Kham fai daeng an raek laeo trong pai khrap.</div>
+            <div class="english">Yes. Cross at the first traffic light then go straight.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ขอบคุณมากครับ</div>
+            <div class="phonetic">Khop khun mak khrap.</div>
+            <div class="english">Thank you very much.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">Direction vocabulary: ซ้าย (sai) = left · ขวา (khwa) = right · ตรงไป (trong pai) = straight · เลี้ยว (liao) = turn · ข้าม (kham) = cross</div>
+    </div>
+  </div>
+
+  <!-- Simulation 3 -->
+  <div class="convo-card">
+    <div class="convo-header">
+      <span class="convo-icon">☕</span>
+      <div class="convo-header-text">
+        <h3>Casual Conversation</h3>
+        <div class="setting">Setting: Chatting with a Thai friend at a café.</div>
+      </div>
+    </div>
+    <div class="convo-body">
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Friend</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">😊</div>
+          <div class="bubble them">
+            <div class="thai">คุณมาอยู่เมืองไทยนานแค่ไหนแล้วครับ?</div>
+            <div class="phonetic">Khun ma yu mueang Thai nan khae nai laeo khrap?</div>
+            <div class="english">How long have you been in Thailand?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">มาแล้วสองเดือนครับ ชอบมากเลยครับ</div>
+            <div class="phonetic">Ma laeo song duean khrap. Chop mak loei khrap.</div>
+            <div class="english">Two months already. I really like it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Friend</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">😊</div>
+          <div class="bubble them">
+            <div class="thai">พูดภาษาไทยเก่งมากเลยนะครับ เรียนที่ไหนครับ?</div>
+            <div class="phonetic">Phut phasa Thai keng mak loei na khrap. Rian thi nai khrap?</div>
+            <div class="english">Your Thai is so good! Where did you learn?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">เรียนออนไลน์ครับ แล้วก็ฝึกกับคนไทยด้วย</div>
+            <div class="phonetic">Rian on-lai khrap. Laeo ko fuek kap khon Thai duay.</div>
+            <div class="english">I studied online. And I also practice with Thai people.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Friend</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">😊</div>
+          <div class="bubble them">
+            <div class="thai">ชอบอาหารไทยไหมครับ?</div>
+            <div class="phonetic">Chop ahan Thai mai khrap?</div>
+            <div class="english">Do you like Thai food?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ชอบมากครับ โดยเฉพาะผัดกะเพรา แต่เผ็ดมากไปนิดนึงครับ</div>
+            <div class="phonetic">Chop mak khrap. Doi chaphaw phat kaphrao. Tae phet mak pai nit nueng khrap.</div>
+            <div class="english">Love it. Especially basil stir fry. But it's a little too spicy.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">แล้วคุณล่ะครับ ทำงานอะไรครับ?</div>
+            <div class="phonetic">Laeo khun la khrap? Tham ngan arai khrap?</div>
+            <div class="english">What about you? What do you do for work?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">แล้วคุณล่ะ? (Laeo khun la?) means "What about you?" — the most natural conversation turn. Use it after answering any question about yourself.</div>
+    </div>
+  </div>
+
+  <!-- Simulation 4 -->
+  <div class="convo-card">
+    <div class="convo-header">
+      <span class="convo-icon">🏨</span>
+      <div class="convo-header-text">
+        <h3>Hotel Check-In</h3>
+        <div class="setting">Setting: Checking in at a guesthouse.</div>
+      </div>
+    </div>
+    <div class="convo-body">
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">สวัสดีครับ มีห้องว่างไหมครับ?</div>
+            <div class="phonetic">Sawatdee khrap. Mi hong wang mai khrap?</div>
+            <div class="english">Hello. Do you have any rooms available?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Staff</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🛎️</div>
+          <div class="bubble them">
+            <div class="thai">มีครับ จะพักกี่คืนครับ?</div>
+            <div class="phonetic">Mi khrap. Ja phak ki khuen khrap?</div>
+            <div class="english">Yes. How many nights?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">สองคืนครับ ห้องเดี่ยวครับ</div>
+            <div class="phonetic">Song khuen khrap. Hong diao khrap.</div>
+            <div class="english">Two nights. A single room.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Staff</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🛎️</div>
+          <div class="bubble them">
+            <div class="thai">คืนละห้าร้อยบาทครับ</div>
+            <div class="phonetic">Khuen la ha roi baht khrap.</div>
+            <div class="english">500 baht per night.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">มีห้องน้ำในห้องไหมครับ?</div>
+            <div class="phonetic">Mi hong nam nai hong mai khrap?</div>
+            <div class="english">Does the room have a private bathroom?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Staff</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🛎️</div>
+          <div class="bubble them">
+            <div class="thai">มีครับ แล้วก็มีแอร์ด้วยครับ</div>
+            <div class="phonetic">Mi khrap. Laeo ko mi ae duay khrap.</div>
+            <div class="english">Yes, and there's air conditioning too.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">โอเคครับ เอาห้องนั้นครับ</div>
+            <div class="phonetic">O-ke khrap. Ao hong nan khrap.</div>
+            <div class="english">Okay. I'll take that room.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">คืนละ ___ บาท (khuen la ___ baht) = "___ baht per night." The pattern ___ละ means "per ___" and works for: วันละ (per day), ชั่วโมงละ (per hour), คนละ (per person).</div>
+    </div>
+  </div>
+
+  <!-- Simulation 5 -->
+  <div class="convo-card">
+    <div class="convo-header">
+      <span class="convo-icon">🛍️</span>
+      <div class="convo-header-text">
+        <h3>Shopping at Chatuchak Market</h3>
+        <div class="setting">Setting: Browsing a clothing stall. Time to negotiate.</div>
+      </div>
+    </div>
+    <div class="convo-body">
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">อันนี้เท่าไหร่ครับ?</div>
+            <div class="phonetic">An ni thao rai khrap?</div>
+            <div class="english">How much is this one?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🏪</div>
+          <div class="bubble them">
+            <div class="thai">สามร้อยห้าสิบบาทครับ</div>
+            <div class="phonetic">Sam roi ha sip baht khrap.</div>
+            <div class="english">350 baht.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">แพงไปนะครับ ลดได้ไหมครับ?</div>
+            <div class="phonetic">Phaeng pai na khrap. Lot dai mai khrap?</div>
+            <div class="english">That's a bit expensive. Can you lower it?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🏪</div>
+          <div class="bubble them">
+            <div class="thai">ลดให้สามร้อยได้ครับ</div>
+            <div class="phonetic">Lot hai sam roi dai khrap.</div>
+            <div class="english">I can do 300.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">สองร้อยแปดสิบได้ไหมครับ?</div>
+            <div class="phonetic">Song roi paet sip dai mai khrap?</div>
+            <div class="english">Can you do 280?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label them-label">Vendor</div>
+        <div class="bubble-row them">
+          <div class="avatar them-avatar">🏪</div>
+          <div class="bubble them">
+            <div class="thai">โอเคครับ เอาไปเลย</div>
+            <div class="phonetic">O-ke khrap. Ao pai loei.</div>
+            <div class="english">Okay. Take it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-exchange">
+        <div class="speaker-label you-label">You</div>
+        <div class="bubble-row you">
+          <div class="avatar you-avatar">🙋</div>
+          <div class="bubble you">
+            <div class="thai">ขอบคุณครับ มีสีอื่นไหมครับ?</div>
+            <div class="phonetic">Khop khun khrap. Mi si uen mai khrap?</div>
+            <div class="english">Thank you. Do you have other colors?</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip-box">The negotiation formula: แพงไปนะครับ (too expensive) → ลดได้ไหม? (can you lower it?) → offer your price + ได้ไหม? Always smile and use นะ to soften requests — it makes all the difference.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-nav">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+  <p>Thai Language Learning Guide · Designed for rapid conversational fluency</p>
+</footer>
+
+</body>
+</html>
