@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thai Language Learning — Complete Guide</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --cream:#FAF8F4;--cream2:#F4F1EB;--white:#FFFFFF;
+    --gold:#B8976A;--gold-light:#E8D9C0;
+    --text:#1D1D1F;--text-secondary:#6E6E73;--text-light:#A1A1A6;
+    --border:#E8E3DA;
+    --shadow:0 4px 30px rgba(0,0,0,0.06);
+    --shadow-hover:0 16px 60px rgba(0,0,0,0.12);
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;background:var(--cream);color:var(--text);line-height:1.6;}
+
+  nav{position:sticky;top:0;z-index:100;background:rgba(250,248,244,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+  nav .logo{font-size:15px;font-weight:600;}
+  nav .logo span{color:var(--gold);}
+  nav .nav-links{display:flex;gap:28px;}
+  nav .nav-links a{font-size:13px;color:var(--text-secondary);text-decoration:none;font-weight:500;transition:color 0.2s;}
+  nav .nav-links a:hover{color:var(--gold);}
+
+  /* HERO */
+  .hero{
+    min-height: 90vh;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:80px 40px 60px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,151,106,0.08) 0%, transparent 65%);
+  }
+  .hero-flag{font-size:72px;margin-bottom:24px;display:block;}
+  .hero-eyebrow{font-size:13px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;}
+  .hero h1{
+    font-size:clamp(52px,9vw,96px);font-weight:700;
+    letter-spacing:-3px;line-height:0.98;
+    color:var(--text);margin-bottom:28px;
+  }
+  .hero h1 em{font-style:normal;color:var(--gold);}
+  .hero-sub{
+    font-size:19px;color:var(--text-secondary);
+    max-width:540px;margin:0 auto 52px;line-height:1.7;
+  }
+  .hero-cta{
+    display:inline-block;
+    background:var(--text);color:var(--white);
+    font-size:15px;font-weight:600;letter-spacing:-0.2px;
+    padding:16px 36px;border-radius:100px;
+    text-decoration:none;transition:all 0.25s;
+    box-shadow:0 8px 30px rgba(0,0,0,0.15);
+  }
+  .hero-cta:hover{background:var(--gold);transform:translateY(-2px);box-shadow:0 12px 40px rgba(184,151,106,0.3);}
+  .hero-stats{display:flex;justify-content:center;gap:60px;flex-wrap:wrap;margin-top:72px;padding-top:48px;border-top:1px solid var(--border);}
+  .hs .num{font-size:38px;font-weight:700;letter-spacing:-1.5px;color:var(--text);display:block;}
+  .hs .label{font-size:13px;color:var(--text-secondary);margin-top:3px;}
+
+  /* SECTIONS GRID */
+  .content{max-width:1000px;margin:0 auto;padding:80px 40px;}
+  .content-label{font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;text-align:center;}
+  .content-title{font-size:clamp(32px,5vw,52px);font-weight:700;letter-spacing:-1.5px;text-align:center;margin-bottom:60px;line-height:1.1;}
+
+  .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(440px,1fr));gap:20px;}
+  .chapter-card{
+    background:var(--white);border:1px solid var(--border);
+    border-radius:24px;overflow:hidden;
+    box-shadow:var(--shadow);
+    text-decoration:none;color:inherit;
+    transition:box-shadow 0.3s,transform 0.3s;
+    display:block;
+  }
+  .chapter-card:hover{box-shadow:var(--shadow-hover);transform:translateY(-4px);}
+  .card-top{padding:32px 32px 24px;border-bottom:1px solid var(--border);}
+  .card-icon{font-size:36px;margin-bottom:16px;display:block;}
+  .card-part{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+  .card-title{font-size:22px;font-weight:700;letter-spacing:-0.5px;color:var(--text);margin-bottom:8px;line-height:1.2;}
+  .card-desc{font-size:14px;color:var(--text-secondary);line-height:1.6;}
+  .card-bottom{padding:18px 32px;display:flex;align-items:center;justify-content:space-between;}
+  .card-meta{font-size:13px;color:var(--text-light);}
+  .card-arrow{width:32px;height:32px;border-radius:50%;background:var(--cream2);display:flex;align-items:center;justify-content:center;font-size:14px;transition:all 0.2s;}
+  .chapter-card:hover .card-arrow{background:var(--gold);color:white;}
+
+  /* DIVIDER */
+  .divider{width:60px;height:1px;background:var(--gold);margin:60px auto;opacity:0.4;}
+
+  /* QUOTE */
+  .quote-block{max-width:700px;margin:0 auto;padding:0 40px 80px;text-align:center;}
+  .quote-text{font-size:clamp(22px,3vw,32px);font-weight:600;letter-spacing:-0.5px;line-height:1.4;color:var(--text);margin-bottom:20px;}
+  .quote-text em{font-style:normal;color:var(--gold);}
+  .quote-attr{font-size:14px;color:var(--text-secondary);}
+
+  footer{text-align:center;padding:60px 40px;border-top:1px solid var(--border);font-size:13px;color:var(--text-light);}
+  .footer-nav{display:flex;justify-content:center;gap:40px;margin-bottom:20px;flex-wrap:wrap;}
+  .footer-nav a{font-size:14px;color:var(--text-secondary);text-decoration:none;transition:color 0.2s;}
+  .footer-nav a:hover{color:var(--gold);}
+
+  @media(max-width:640px){
+    nav{padding:0 20px;} nav .nav-links{display:none;}
+    .hero{padding:60px 20px 50px;}
+    .hero h1{letter-spacing:-2px;}
+    .content{padding:60px 20px;}
+    .cards-grid{grid-template-columns:1fr;}
+    .hero-stats{gap:32px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🇹🇭 Thai&nbsp;<span>Language</span></div>
+  <div class="nav-links">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <span class="hero-flag">🇹🇭</span>
+  <div class="hero-eyebrow">Complete Learning System</div>
+  <h1>Learn to Speak<br><em>Thai</em></h1>
+  <p class="hero-sub">A professional tutor's fast-track system. Beginner to conversational in 30 weeks — built entirely around real-life communication.</p>
+  <a href="part1-roadmap.html" class="hero-cta">Start with the Roadmap →</a>
+
+  <div class="hero-stats">
+    <div class="hs"><span class="num">30</span><div class="label">Weeks to conversational</div></div>
+    <div class="hs"><span class="num">1,000</span><div class="label">Essential words</div></div>
+    <div class="hs"><span class="num">5</span><div class="label">Real conversation scripts</div></div>
+    <div class="hs"><span class="num">20min</span><div class="label">Minimum daily practice</div></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<div class="content">
+  <div class="content-label">The Complete System</div>
+  <div class="content-title">Five Parts.<br>One Goal.</div>
+
+  <div class="cards-grid">
+
+    <a href="part1-roadmap.html" class="chapter-card">
+      <div class="card-top">
+        <span class="card-icon">🗺️</span>
+        <div class="card-part">Part 1</div>
+        <div class="card-title">The Complete Roadmap</div>
+        <div class="card-desc">Four phases from zero to conversational. Week-by-week focus, key milestones, and the tools that actually work. Your master plan for the next 30 weeks.</div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">4 phases · 8 tools</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="part2-foundations.html" class="chapter-card">
+      <div class="card-top">
+        <span class="card-icon">🧱</span>
+        <div class="card-part">Part 2</div>
+        <div class="card-title">Core Speaking Foundations</div>
+        <div class="card-desc">5 grammar rules, 6 master sentence structures, and a complete survival phrase bank. Master these and you can build thousands of sentences from Day 1.</div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">5 rules · 6 structures · 50+ phrases</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="part3-conversations.html" class="chapter-card">
+      <div class="card-top">
+        <span class="card-icon">💬</span>
+        <div class="card-part">Part 3</div>
+        <div class="card-title">Real-Life Conversations</div>
+        <div class="card-desc">Five fully scripted simulations — ordering food, asking directions, casual chat, hotel check-in, and market shopping. With phonetics for every line. Read them out loud.</div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">5 scenarios · full phonetics</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="part4-1000words.html" class="chapter-card">
+      <div class="card-top">
+        <span class="card-icon">📖</span>
+        <div class="card-part">Part 4</div>
+        <div class="card-title">The 1000 Most-Used Words</div>
+        <div class="card-desc">Research-backed list covering ~85% of everyday conversational Thai. Organized into 18 categories with Thai script, phonetics, and English. Searchable and filterable.</div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">1,000 words · 18 categories · live search</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+    <a href="part5-daily.html" class="chapter-card" style="grid-column:1/-1;">
+      <div class="card-top">
+        <span class="card-icon">⏱️</span>
+        <div class="card-part">Part 5</div>
+        <div class="card-title">Daily Practice Routine</div>
+        <div class="card-desc">Three timed routines (20, 30, and 45 minutes), a 7-day weekly calendar, a 30-week milestone tracker you can check off, and 7 tutor insights that separate fluent students from those who plateau.</div>
+      </div>
+      <div class="card-bottom">
+        <span class="card-meta">3 routines · 7-day calendar · 12 milestones · 7 tips</span>
+        <div class="card-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<div class="quote-block">
+  <div class="quote-text">"The best time to start speaking Thai was your first day in Thailand. The second best time is <em>right now.</em>"</div>
+  <div class="quote-attr">— Professional Thai Language Tutor, 10+ years experience</div>
+</div>
+
+<footer>
+  <div class="footer-nav">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+  <p>Thai Language Learning Guide · Designed for rapid conversational fluency · โชคดีนะครับ</p>
+</footer>
+
+</body>
+</html>
