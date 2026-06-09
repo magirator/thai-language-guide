@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Core Speaking Foundations — Thai Language</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --cream: #FAF8F4; --cream2: #F4F1EB; --white: #FFFFFF;
+    --gold: #B8976A; --gold-light: #E8D9C0;
+    --text: #1D1D1F; --text-secondary: #6E6E73; --text-light: #A1A1A6;
+    --border: #E8E3DA;
+    --shadow: 0 4px 30px rgba(0,0,0,0.06);
+    --shadow-hover: 0 12px 50px rgba(0,0,0,0.10);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif; background: var(--cream); color: var(--text); line-height: 1.6; }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250,248,244,0.85); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px; height: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  nav .logo { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+  nav .logo span { color: var(--gold); }
+  nav .nav-links { display: flex; gap: 32px; }
+  nav .nav-links a { font-size: 13px; color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  nav .nav-links a:hover { color: var(--gold); }
+
+  .hero { padding: 110px 40px 70px; max-width: 900px; margin: 0 auto; text-align: center; }
+  .badge { display: inline-block; background: var(--gold-light); color: var(--gold); font-size: 12px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 28px; }
+  .hero h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 700; letter-spacing: -2px; line-height: 1.05; margin-bottom: 22px; }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero p { font-size: 18px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  .divider { width: 60px; height: 1px; background: var(--gold); margin: 70px auto; opacity: 0.4; }
+
+  .section { max-width: 960px; margin: 0 auto; padding: 0 40px 80px; }
+  .section-label { font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .section-title { font-size: clamp(26px, 4vw, 42px); font-weight: 700; letter-spacing: -1px; margin-bottom: 14px; line-height: 1.15; }
+  .section-desc { font-size: 17px; color: var(--text-secondary); max-width: 600px; line-height: 1.7; margin-bottom: 44px; }
+
+  /* RULES */
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 60px; }
+  .rule-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); transition: box-shadow 0.3s, transform 0.3s; }
+  .rule-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+  .rule-num { font-size: 13px; font-weight: 700; color: var(--gold); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+  .rule-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 10px; letter-spacing: -0.3px; }
+  .rule-body { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+  .rule-body strong { color: var(--text); }
+  .rule-example { margin-top: 14px; padding: 12px 14px; background: var(--cream2); border-radius: 10px; font-size: 13px; color: var(--text-secondary); font-style: italic; }
+
+  /* STRUCTURE BLOCKS */
+  .structure-block { background: var(--white); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); margin-bottom: 24px; }
+  .structure-header { padding: 24px 28px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px; }
+  .structure-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .structure-header-text h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 3px; }
+  .structure-header-text p { font-size: 13px; color: var(--text-secondary); }
+  .formula-bar { margin: 0 28px 0; padding: 12px 16px; background: var(--cream2); border-radius: 10px; font-size: 13px; color: var(--gold); font-weight: 600; border-left: 3px solid var(--gold); }
+  .formula-bar + .formula-bar { margin-top: 8px; }
+
+  /* PHRASE TABLE */
+  .phrase-table { width: 100%; border-collapse: collapse; }
+  .phrase-table thead tr { border-bottom: 1px solid var(--border); }
+  .phrase-table th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-light); padding: 14px 28px 12px; }
+  .phrase-table td { padding: 13px 28px; font-size: 14px; border-top: 1px solid var(--border); vertical-align: top; }
+  .phrase-table td:first-child { font-size: 15px; font-weight: 600; color: var(--text); letter-spacing: -0.2px; }
+  .phrase-table td:nth-child(2) { color: var(--gold); font-style: italic; }
+  .phrase-table td:nth-child(3) { color: var(--text-secondary); }
+  .phrase-table tr:last-child td { padding-bottom: 22px; }
+
+  /* PHRASE BANK */
+  .phrase-bank-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(440px, 1fr)); gap: 20px; }
+  .phrase-bank-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; overflow: hidden; box-shadow: var(--shadow); }
+  .phrase-bank-card .card-title { padding: 20px 24px 16px; font-size: 16px; font-weight: 700; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .phrase-bank-card .card-title .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* QUESTION WORDS */
+  .qwords-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; margin-bottom: 48px; }
+  .qword-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); text-align: center; }
+  .qword-thai { font-size: 22px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+  .qword-phonetic { font-size: 13px; color: var(--gold); margin-bottom: 6px; }
+  .qword-eng { font-size: 13px; color: var(--text-secondary); }
+
+  footer { text-align: center; padding: 60px 40px; border-top: 1px solid var(--border); font-size: 13px; color: var(--text-light); }
+  .footer-nav { display: flex; justify-content: center; gap: 40px; margin-bottom: 20px; flex-wrap: wrap; }
+  .footer-nav a { font-size: 14px; color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+  .footer-nav a:hover { color: var(--gold); }
+
+  @media(max-width:640px){
+    nav{padding:0 20px;} nav .nav-links{display:none;}
+    .hero{padding:80px 20px 50px;} .section{padding:0 20px 60px;}
+    .phrase-bank-grid{grid-template-columns:1fr;}
+    .phrase-table th,.phrase-table td{padding:12px 16px;}
+    .structure-header{padding:20px 20px 16px;}
+    .formula-bar{margin:0 20px 0;} .formula-bar+.formula-bar{margin-top:8px;}
+    .qwords-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">🇹🇭 Thai&nbsp;<span>Language</span></div>
+  <div class="nav-links">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="badge">Part 2 — Foundations</div>
+  <h1>The Grammar That<br><em>Actually Matters</em></h1>
+  <p>5 rules, 6 sentence structures, and a complete survival phrase bank. Master these and you can communicate in almost any situation.</p>
+</div>
+
+<div class="divider"></div>
+
+<!-- 5 RULES -->
+<div class="section">
+  <div class="section-label">The Essentials</div>
+  <div class="section-title">5 Non-Negotiable<br>Rules of Thai Grammar</div>
+  <p class="section-desc">Thai grammar is remarkably logical. These 5 rules cover the foundation of everything you'll say and hear.</p>
+
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-num">Rule 01</div>
+      <div class="rule-title">No verb conjugation</div>
+      <div class="rule-body">Thai verbs <strong>never change</strong>. "I eat / he eats / they ate / we will eat" = <strong>กิน (gin)</strong> every single time. Time is shown by adding time words, not changing the verb.</div>
+      <div class="rule-example">ผมกิน · คุณกิน · เขากิน — all the same verb</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 02</div>
+      <div class="rule-title">Subject + Verb + Object</div>
+      <div class="rule-body">Sentence order is the same as English. <strong>ผม + กิน + ข้าว</strong> = I eat rice. Keep this order and you will be understood.</div>
+      <div class="rule-example">ฉัน + ชอบ + อาหารไทย = I like Thai food</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 03</div>
+      <div class="rule-title">Polite particles end sentences</div>
+      <div class="rule-body">Men add <strong>ครับ (khrap)</strong>. Women add <strong>ค่ะ / คะ (kha)</strong>. These make you sound respectful and natural instantly. Use them constantly.</div>
+      <div class="rule-example">ขอบคุณ<strong>ครับ</strong> · สวัสดี<strong>ค่ะ</strong></div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 04</div>
+      <div class="rule-title">Negation = ไม่ before the verb</div>
+      <div class="rule-body">Place <strong>ไม่ (mai)</strong> directly before any verb or adjective to negate it. That's the only rule — no tense changes needed.</div>
+      <div class="rule-example">ผมกิน → ผม<strong>ไม่</strong>กิน (I eat → I don't eat)</div>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">Rule 05</div>
+      <div class="rule-title">Questions use particles</div>
+      <div class="rule-body">Add <strong>ไหม (mai)</strong> at the end for yes/no questions. Use question words (อะไร, ที่ไหน, ใคร…) at the end of the sentence for open questions.</div>
+      <div class="rule-example">คุณชอบ<strong>ไหม</strong>? / คุณชอบ<strong>อะไร</strong>?</div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SENTENCE STRUCTURES -->
+<div class="section">
+  <div class="section-label">Master Patterns</div>
+  <div class="section-title">6 Sentence Structures<br>That Cover Everything</div>
+  <p class="section-desc">Learn these 6 patterns and you can build thousands of sentences. Every structure includes a formula and ready-to-use examples.</p>
+
+  <!-- Structure 1 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">👤</div>
+      <div class="structure-header-text">
+        <h3>Structure 1 — "I am / I am not"</h3>
+        <p>Introduce yourself, describe identity, profession, nationality</p>
+      </div>
+    </div>
+    <div style="padding:16px 0 0">
+      <div class="formula-bar">✦ Subject + เป็น (pen) + noun → "is / am / are"</div>
+      <div class="formula-bar" style="margin-top:8px;">✦ Subject + ไม่ใช่ (mai chai) + noun → "is not / am not"</div>
+    </div>
+    <table class="phrase-table">
+      <thead><tr><th>Thai</th><th>Phonetic</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td>ผมเป็นคนอเมริกัน</td><td>Phom pen khon Amerika</td><td>I am American</td></tr>
+        <tr><td>ฉันเป็นครู</td><td>Chan pen khruu</td><td>I am a teacher</td></tr>
+        <tr><td>ผมไม่ใช่คนไทย</td><td>Phom mai chai khon Thai</td><td>I am not Thai</td></tr>
+        <tr><td>คุณเป็นใคร?</td><td>Khun pen khai?</td><td>Who are you?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Structure 2 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">🙋</div>
+      <div class="structure-header-text">
+        <h3>Structure 2 — "I want / I need"</h3>
+        <p>Request things, express desires, order food, ask for help</p>
+      </div>
+    </div>
+    <div style="padding:16px 0 0">
+      <div class="formula-bar">✦ Subject + ต้องการ (tong gan) + noun → formal want/need</div>
+      <div class="formula-bar" style="margin-top:8px;">✦ Subject + อยาก (yak) + verb → casual "want to do"</div>
+    </div>
+    <table class="phrase-table">
+      <thead><tr><th>Thai</th><th>Phonetic</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td>ผมต้องการน้ำ</td><td>Phom tong gan nam</td><td>I want / need water</td></tr>
+        <tr><td>ฉันอยากกินข้าว</td><td>Chan yak gin khao</td><td>I want to eat rice</td></tr>
+        <tr><td>ผมไม่อยาก...</td><td>Phom mai yak...</td><td>I don't want to...</td></tr>
+        <tr><td>คุณอยากได้อะไร?</td><td>Khun yak dai arai?</td><td>What do you want?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Structure 3 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">❤️</div>
+      <div class="structure-header-text">
+        <h3>Structure 3 — "I like / I don't like"</h3>
+        <p>Express preferences, opinions, taste</p>
+      </div>
+    </div>
+    <div style="padding:16px 0 0">
+      <div class="formula-bar">✦ Subject + ชอบ (chop) + noun/verb → "like"</div>
+      <div class="formula-bar" style="margin-top:8px;">✦ Subject + ไม่ชอบ (mai chop) + noun/verb → "don't like"</div>
+    </div>
+    <table class="phrase-table">
+      <thead><tr><th>Thai</th><th>Phonetic</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td>ผมชอบอาหารไทย</td><td>Phom chop ahan Thai</td><td>I like Thai food</td></tr>
+        <tr><td>ฉันไม่ชอบเผ็ด</td><td>Chan mai chop phet</td><td>I don't like spicy</td></tr>
+        <tr><td>คุณชอบอะไร?</td><td>Khun chop arai?</td><td>What do you like?</td></tr>
+        <tr><td>ชอบมากเลย</td><td>Chop mak loei</td><td>I really like it</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Structure 4 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">✅</div>
+      <div class="structure-header-text">
+        <h3>Structure 4 — "Can / Can't"</h3>
+        <p>Express ability, ask for permission, offer help</p>
+      </div>
+    </div>
+    <div style="padding:16px 0 0">
+      <div class="formula-bar">✦ Subject + verb + ได้ (dai) → can do</div>
+      <div class="formula-bar" style="margin-top:8px;">✦ Subject + verb + ไม่ได้ (mai dai) → can't do</div>
+    </div>
+    <table class="phrase-table">
+      <thead><tr><th>Thai</th><th>Phonetic</th><th>English</th></tr></thead>
+      <tbody>
+        <tr><td>ผมพูดภาษาไทยได้นิดหน่อย</td><td>Phom phut phasa Thai dai nit noi</td><td>I can speak a little Thai</td></tr>
+        <tr><td>ผมพูดภาษาไทยไม่ได้</td><td>Phom phut phasa Thai mai dai</td><td>I can't speak Thai</td></tr>
+        <tr><td>คุณพูดภาษาอังกฤษได้ไหม?</td><td>Khun phut phasa Angkrit dai mai?</td><td>Can you speak English?</td></tr>
+        <tr><td>ช่วยผมได้ไหม?</td><td>Chuay phom dai mai?</td><td>Can you help me?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Structure 5 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">❓</div>
+      <div class="structure-header-text">
+        <h3>Structure 5 — Question Words</h3>
+        <p>These go at the END of the sentence in Thai (unlike English)</p>
+      </div>
+    </div>
+    <div style="padding:16px 0 8px">
+      <div class="formula-bar">✦ In Thai, question words come at the END: คุณชื่ออะไร? = You name what? = What's your name?</div>
+    </div>
+    <div style="padding:16px 28px 24px; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px;">
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">อะไร</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">arai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">What?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">ที่ไหน</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">thi nai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">Where?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">ใคร</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">khai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">Who?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">เมื่อไหร่</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">muea rai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">When?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">เท่าไหร่</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">thao rai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">How much?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">ทำไม</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">tham mai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">Why?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">ยังไง</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">yang ngai</div>
+        <div style="font-size:13px;color:var(--text-secondary);">How?</div>
+      </div>
+      <div style="background:var(--cream2);border-radius:12px;padding:14px;text-align:center;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:4px;">กี่</div>
+        <div style="font-size:12px;color:var(--gold);margin-bottom:4px;">ki</div>
+        <div style="font-size:13px;color:var(--text-secondary);">How many?</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Structure 6 -->
+  <div class="structure-block">
+    <div class="structure-header">
+      <div class="structure-icon">⏰</div>
+      <div class="structure-header-text">
+        <h3>Structure 6 — Past, Present, Future</h3>
+        <p>No verb changes. Just add a time marker before or after the verb.</p>
+      </div>
+    </div>
+    <table class="phrase-table">
+      <thead><tr><th>Time</th><th>Thai</th><th>Phonetic</th><th>Example</th></tr></thead>
+      <tbody>
+        <tr><td>Already (past)</td><td>แล้ว</td><td>laeo</td><td>กินแล้ว = already ate</td></tr>
+        <tr><td>Just now</td><td>เพิ่ง</td><td>phoeng</td><td>เพิ่งมา = just arrived</td></tr>
+        <tr><td>Right now</td><td>กำลัง</td><td>gamlang</td><td>กำลังกิน = eating now</td></tr>
+        <tr><td>Will (future)</td><td>จะ</td><td>ja</td><td>จะไป = will go</td></tr>
+        <tr><td>Yesterday</td><td>เมื่อวาน</td><td>muea wan</td><td>เมื่อวานไป = went yesterday</td></tr>
+        <tr><td>Tomorrow</td><td>พรุ่งนี้</td><td>phrung ni</td><td>พรุ่งนี้จะไป = will go tomorrow</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SURVIVAL PHRASES -->
+<div class="section">
+  <div class="section-label">Phrase Bank</div>
+  <div class="section-title">Essential Phrases<br>for Every Situation</div>
+  <p class="section-desc">These phrases will carry you through 90% of everyday interactions. Learn them all by the end of Week 2.</p>
+
+  <div class="phrase-bank-grid">
+    <div class="phrase-bank-card">
+      <div class="card-title"><span class="dot"></span>Greetings &amp; Introductions</div>
+      <table class="phrase-table">
+        <tbody>
+          <tr><td>สวัสดีครับ/ค่ะ</td><td>Sawatdee khrap/kha</td><td>Hello</td></tr>
+          <tr><td>ยินดีที่ได้รู้จัก</td><td>Yin dee thi dai ru jak</td><td>Nice to meet you</td></tr>
+          <tr><td>ผมชื่อ... / ฉันชื่อ...</td><td>Phom / Chan chue...</td><td>My name is...</td></tr>
+          <tr><td>คุณชื่ออะไร?</td><td>Khun chue arai?</td><td>What's your name?</td></tr>
+          <tr><td>คุณมาจากไหน?</td><td>Khun ma jak nai?</td><td>Where are you from?</td></tr>
+          <tr><td>ผมมาจากอังกฤษ</td><td>Phom ma jak Angkrit</td><td>I'm from England</td></tr>
+          <tr><td>แล้วพบกันใหม่</td><td>Laeo phop gan mai</td><td>See you again</td></tr>
+          <tr><td>ลาก่อนครับ</td><td>La kon khrap</td><td>Goodbye</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="phrase-bank-card">
+      <div class="card-title"><span class="dot"></span>Polite &amp; Essential</div>
+      <table class="phrase-table">
+        <tbody>
+          <tr><td>ขอบคุณครับ/ค่ะ</td><td>Khop khun khrap/kha</td><td>Thank you</td></tr>
+          <tr><td>ขอโทษครับ/ค่ะ</td><td>Kho thot khrap/kha</td><td>Sorry / Excuse me</td></tr>
+          <tr><td>ไม่เป็นไร</td><td>Mai pen rai</td><td>No problem / It's okay</td></tr>
+          <tr><td>ได้ครับ</td><td>Dai khrap</td><td>Yes / Okay</td></tr>
+          <tr><td>ไม่เข้าใจครับ</td><td>Mai khao jai khrap</td><td>I don't understand</td></tr>
+          <tr><td>พูดช้าๆ ได้ไหม?</td><td>Phut cha cha dai mai?</td><td>Can you speak slowly?</td></tr>
+          <tr><td>พูดซ้ำได้ไหม?</td><td>Phut sam dai mai?</td><td>Can you repeat that?</td></tr>
+          <tr><td>ช่วยผมได้ไหม?</td><td>Chuay phom dai mai?</td><td>Can you help me?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="phrase-bank-card">
+      <div class="card-title"><span class="dot"></span>Shopping &amp; Prices</div>
+      <table class="phrase-table">
+        <tbody>
+          <tr><td>เท่าไหร่?</td><td>Thao rai?</td><td>How much?</td></tr>
+          <tr><td>แพงไปครับ</td><td>Phaeng pai khrap</td><td>Too expensive</td></tr>
+          <tr><td>ลดราคาได้ไหม?</td><td>Lot rakha dai mai?</td><td>Can you lower the price?</td></tr>
+          <tr><td>มีไหม?</td><td>Mi mai?</td><td>Do you have it?</td></tr>
+          <tr><td>ไม่มี</td><td>Mai mi</td><td>Don't have / There isn't</td></tr>
+          <tr><td>เอา...</td><td>Ao...</td><td>I'll take... / I want...</td></tr>
+          <tr><td>ไม่เอา</td><td>Mai ao</td><td>I don't want it</td></tr>
+          <tr><td>จ่ายด้วยบัตรได้ไหม?</td><td>Jai duay bat dai mai?</td><td>Can I pay by card?</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="phrase-bank-card">
+      <div class="card-title"><span class="dot"></span>Food &amp; Restaurants</div>
+      <table class="phrase-table">
+        <tbody>
+          <tr><td>อร่อยมาก</td><td>Aroi mak</td><td>Very delicious</td></tr>
+          <tr><td>เผ็ดมาก</td><td>Phet mak</td><td>Very spicy</td></tr>
+          <tr><td>ไม่เผ็ดครับ</td><td>Mai phet khrap</td><td>Not spicy please</td></tr>
+          <tr><td>ไม่ใส่ผักชี</td><td>Mai sai phak chi</td><td>No coriander</td></tr>
+          <tr><td>สั่งอาหารได้ไหม?</td><td>Sang ahan dai mai?</td><td>Can I order?</td></tr>
+          <tr><td>เก็บเงินด้วยครับ</td><td>Kep ngoen duay khrap</td><td>Check please</td></tr>
+          <tr><td>มังสวิรัติ</td><td>Mangsawirat</td><td>Vegetarian</td></tr>
+          <tr><td>อิ่มแล้วครับ</td><td>Im laeo khrap</td><td>I'm full</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<footer>
+  <div class="footer-nav">
+    <a href="part1-roadmap.html">Roadmap</a>
+    <a href="part2-foundations.html">Foundations</a>
+    <a href="part3-conversations.html">Conversations</a>
+    <a href="part4-1000words.html">1000 Words</a>
+    <a href="part5-daily.html">Daily Practice</a>
+  </div>
+  <p>Thai Language Learning Guide · Designed for rapid conversational fluency</p>
+</footer>
+
+</body>
+</html>
